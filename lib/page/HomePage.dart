@@ -13,9 +13,10 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         title: const Text('알람',style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orange.shade900,
+        backgroundColor: Colors.orange.shade800,
       ),
       body: const Center(
         child: Text('알람 목록'),
@@ -27,7 +28,7 @@ class _HomepageState extends State<Homepage> {
             MaterialPageRoute(builder: (context) => NewAlarmPage()),
           );
         },
-        backgroundColor: Colors.orange.shade900,
+        backgroundColor: Colors.orange.shade800,
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: Colors.white),
       ),
