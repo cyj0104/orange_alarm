@@ -12,6 +12,19 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
+      // builder: (BuildContext context, Widget? child) {
+      //   return Theme(
+      //     data: ThemeData.light().copyWith(
+      //       primaryColor: Colors.orange, // 주황색으로 설정
+      //       hintColor: Colors.orange, // 주황색으로 설정
+      //       colorScheme: ColorScheme.light(primary: Colors.orange), // 주황색으로 설정
+      //       buttonTheme: ButtonThemeData(
+      //         textTheme: ButtonTextTheme.primary, // 버튼 텍스트 색상을 기본 텍스트 색상으로 설정
+      //       ),
+      //     ),
+      //     child: child!,
+      //   );
+      // },
     );
     if (picked != null && picked != _selectedTime) {
       setState(() {
@@ -32,10 +45,10 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade700,
+      backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         title: const Text('새 알람',style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: Colors.orange.shade900,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -51,18 +64,28 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
         children: [
           ///////////// 시간 선택
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 50),
+            padding: const EdgeInsets.symmetric(vertical: 20),
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () {
                 _selectTime(context);
               },
-              child: Text(
-                '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'} ${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
-                style: const TextStyle(fontSize: 80, color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'}  ',
+                    style: const TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                      '${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
+                      style: const TextStyle(fontSize: 115, color: Colors.white, fontWeight: FontWeight.bold),
+                  )
+                ],
+              )
             ),
           ),
+
 
           ///////////// 요일 선택
           Container(
@@ -72,17 +95,14 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
               children: List.generate(
                 weekdays.length,
                 (index) => InkWell(
-                  onTap: () {
-                    toggleSelection(index);
-                  },
+                  onTap: () { toggleSelection(index); },
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(5),
                         child: Text(
                           weekdays[index],
                           style: TextStyle(
-                            fontSize: 30, color: isSelected[index] ? Colors.orange.shade800 : Colors.white,
+                            fontSize: 40, color: isSelected[index] ? Colors.orange.shade900 : Colors.white,
                           ),
                         ),
                       )
@@ -92,6 +112,8 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
               ),
             ),
           ),
+
+
           ///////////// 알람음 선택
           ///////////// 다시 울림
           ///////////// 알람 끄기 미션

@@ -15,11 +15,11 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
-        title: const Text('알람',style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orange.shade800,
+        title: const Text('알람', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orange.shade900,
       ),
       body: const Center(
-        child: Text('알람 목록'),
+        child: Text('알람 목록', style: TextStyle(color: Colors.white)),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -28,7 +28,7 @@ class _HomepageState extends State<Homepage> {
             MaterialPageRoute(builder: (context) => NewAlarmPage()),
           );
         },
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: Colors.orange.shade900,
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: Colors.white),
       ),
