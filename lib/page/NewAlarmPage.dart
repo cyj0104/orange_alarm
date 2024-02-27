@@ -1,4 +1,3 @@
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewAlarmPage extends StatefulWidget {
@@ -305,7 +304,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                     padding: const EdgeInsets.only(left:10, right: 5),
                     child: ElevatedButton(
                       onPressed: () {
-
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor : Colors.orange.shade900,
