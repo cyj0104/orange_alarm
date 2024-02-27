@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewAlarmPage extends StatefulWidget {
@@ -5,8 +6,10 @@ class NewAlarmPage extends StatefulWidget {
   _NewAlarmPageState createState() => _NewAlarmPageState();
 }
 
+
 class _NewAlarmPageState extends State<NewAlarmPage> {
   TimeOfDay _selectedTime = TimeOfDay.now();
+
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -41,6 +44,14 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
       isSelected[index] = !isSelected[index];
     });
   }
+
+  String? selectedAlarmBell;
+
+  List<String> alarmRingAgain = ['사용 안 함', '5분, 3회', '5분, 5회', '10분, 2회', '10분, 3회'];
+  String? selectedAlarmRingAgain;
+
+  List<String> alarmOffMission = ['사용 안 함', '바코드 찍기', '수학 문제 풀기'];
+  String? selectedAlarmOffMission;
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +109,10 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                   onTap: () { toggleSelection(index); },
                   child: Column(
                     children: [
-                      Container(
-                        child: Text(
-                          weekdays[index],
-                          style: TextStyle(
-                            fontSize: 40, color: isSelected[index] ? Colors.orange.shade900 : Colors.white,
-                          ),
+                      Text(
+                        weekdays[index],
+                        style: TextStyle(
+                          fontSize: 40, color: isSelected[index] ? Colors.orange.shade900 : Colors.white,
                         ),
                       )
                     ],
@@ -115,8 +124,176 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
 
           ///////////// 알람음 선택
+          Container(
+            padding: EdgeInsets.only(left:10, top:50, right:10, bottom:0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "알림음",style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  Container(
+                      decoration:BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.orange.shade900,
+                      ),
+                      width: 200,
+                      child: DropdownButton<String>(
+                        padding:  EdgeInsets.only(left: 15),
+                        hint: const Text(
+                          "알림음 선택",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white70,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        value: selectedAlarmBell,
+                        borderRadius: BorderRadius.circular(10),
+                        dropdownColor: Colors.orange.shade900,
+                        isExpanded: true,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedAlarmBell = newValue;
+                          });
+                        },
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                        underline: Container(),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        items: const [
+                          DropdownMenuItem(value: 'value1', child: Text('value1 text')),
+                          DropdownMenuItem(value: 'value1', child: Text('value2 text')),
+                        ],
+                      )
+                  ),
+                ]
+            ),
+          ),
+
           ///////////// 다시 울림
+          Container(
+            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "다시 울림",style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  Container(
+                    decoration:BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.orange.shade900,
+                    ),
+                    width: 200,
+                    child: DropdownButton<String>(
+                      padding:  EdgeInsets.only(left: 15),
+                      hint: const Text(
+                        "간격, 횟수 선택",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white70,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      value: selectedAlarmRingAgain,
+                      borderRadius: BorderRadius.circular(10),
+                      dropdownColor: Colors.orange.shade900,
+                      isExpanded: true,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedAlarmRingAgain = newValue;
+                        });
+                      },
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          ),
+                      underline: Container(),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                        ),
+                      items: alarmRingAgain.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                          ),
+                        );
+                      }).toList(),
+                    )
+                  ),
+                ]
+            ),
+          ),
+
+
           ///////////// 알람 끄기 미션
+          Container(
+            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "알람 끄기 미션",style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  Container(
+                      decoration:BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.orange.shade900,
+                      ),
+                      width: 200,
+                      child: DropdownButton<String>(
+                        padding:  EdgeInsets.only(left: 15),
+                        hint: const Text(
+                          "미션 선택",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white70,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        value: selectedAlarmOffMission,
+                        borderRadius: BorderRadius.circular(10),
+                        dropdownColor: Colors.orange.shade900,
+                        isExpanded: true,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedAlarmOffMission = newValue!;
+                          });
+                        },
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                        underline: Container(),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        items: alarmOffMission.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                            ),
+                          );
+                        }).toList(),
+                      )
+                  ),
+                ]
+            ),
+          ),
+
           ///////////// 취소, 저장 버튼
         ],
       ),
