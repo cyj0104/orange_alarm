@@ -147,7 +147,6 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                               fontSize: 15,
                               color: Colors.white70,
                               fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold
                           ),
                         ),
                         value: selectedAlarmBell,
@@ -201,7 +200,6 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                           fontSize: 15,
                           color: Colors.white70,
                           fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold
                         ),
                       ),
                       value: selectedAlarmRingAgain,
@@ -260,7 +258,6 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                               fontSize: 15,
                               color: Colors.white70,
                               fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold
                           ),
                         ),
                         value: selectedAlarmOffMission,
