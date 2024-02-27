@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewAlarmPage extends StatefulWidget {
+  const NewAlarmPage({super.key});
+
   @override
   _NewAlarmPageState createState() => _NewAlarmPageState();
 }
@@ -9,7 +11,6 @@ class NewAlarmPage extends StatefulWidget {
 
 class _NewAlarmPageState extends State<NewAlarmPage> {
   TimeOfDay _selectedTime = TimeOfDay.now();
-
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -100,7 +101,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 요일 선택
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
@@ -125,12 +126,12 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 알람음 선택
           Container(
-            padding: EdgeInsets.only(left:10, top:50, right:10, bottom:0),
+            padding: const EdgeInsets.only(left:10, top:50, right:10, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "알림음",style: const TextStyle(fontSize: 20, color: Colors.white),
+                  const Text(
+                    "알림음",style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   Container(
                       decoration:BoxDecoration(
@@ -139,7 +140,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                       ),
                       width: 200,
                       child: DropdownButton<String>(
-                        padding:  EdgeInsets.only(left: 15),
+                        padding: const EdgeInsets.only(left: 15),
                         hint: const Text(
                           "알림음 선택",
                           style: TextStyle(
@@ -179,12 +180,12 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 다시 울림
           Container(
-            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            padding: const EdgeInsets.only(left:10, top:30, right:10, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "다시 울림",style: const TextStyle(fontSize: 20, color: Colors.white),
+                  const Text(
+                    "다시 울림",style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   Container(
                     decoration:BoxDecoration(
@@ -193,7 +194,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                     ),
                     width: 200,
                     child: DropdownButton<String>(
-                      padding:  EdgeInsets.only(left: 15),
+                      padding: const EdgeInsets.only(left: 15),
                       hint: const Text(
                         "간격, 횟수 선택",
                         style: TextStyle(
@@ -238,12 +239,12 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 알람 끄기 미션
           Container(
-            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            padding: const EdgeInsets.only(left:10, top:30, right:10, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "알람 끄기 미션",style: const TextStyle(fontSize: 20, color: Colors.white),
+                  const Text(
+                    "알람 끄기 미션",style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   Container(
                       decoration:BoxDecoration(
@@ -252,7 +253,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                       ),
                       width: 200,
                       child: DropdownButton<String>(
-                        padding:  EdgeInsets.only(left: 15),
+                        padding: const EdgeInsets.only(left: 15),
                         hint: const Text(
                           "미션 선택",
                           style: TextStyle(
@@ -294,9 +295,53 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
             ),
           ),
 
+          Spacer(),
+
           ///////////// 취소, 저장 버튼
-        ],
-      ),
+          Container(
+            padding: const EdgeInsets.only(bottom:20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:10, right: 5),
+                    child: ElevatedButton(
+                      onPressed: () {
+
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor : Colors.orange.shade900,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                          )
+                      ),
+                      child: const Text('취소', style: TextStyle(fontSize: 20, color: Colors.white)),
+                    ),
+                  )
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5, right: 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor : Colors.orange.shade900,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                          )
+                      ),
+                      child: const Text('저장', style: TextStyle(fontSize: 20, color: Colors.white)),
+                    ),
+                  )
+                )
+              ]
+            )
+          ),
+    ],
+    ),
     );
   }
 }
