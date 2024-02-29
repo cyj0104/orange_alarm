@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NewAlarmPage extends StatefulWidget {
-  const NewAlarmPage({super.key});
+  NewAlarmPage({super.key});
 
   @override
   _NewAlarmPageState createState() => _NewAlarmPageState();
@@ -58,10 +58,10 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
-        title: const Text('새 알람',style: TextStyle(color: Colors.white)),
+        title: Text('새 알람',style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.orange.shade900,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -75,7 +75,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
         children: [
           ///////////// 시간 선택
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 20),
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () {
@@ -86,11 +86,11 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                 children: [
                   Text(
                     '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'}  ',
-                    style: const TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   Text(
                       '${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
-                      style: const TextStyle(fontSize: 115, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 115, color: Colors.white, fontWeight: FontWeight.bold),
                   )
                 ],
               )
@@ -100,7 +100,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 요일 선택
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
@@ -125,11 +125,11 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 알람음 선택
           Container(
-            padding: const EdgeInsets.only(left:10, top:50, right:10, bottom:0),
+            padding: EdgeInsets.only(left:10, top:50, right:10, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "알림음",style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   Container(
@@ -139,8 +139,8 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                       ),
                       width: 200,
                       child: DropdownButton<String>(
-                        padding: const EdgeInsets.only(left: 15),
-                        hint: const Text(
+                        padding: EdgeInsets.only(left: 15),
+                        hint: Text(
                           "알림음 선택",
                           style: TextStyle(
                               fontSize: 15,
@@ -157,16 +157,16 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                             selectedAlarmBell = newValue;
                           });
                         },
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                         ),
                         underline: Container(),
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.arrow_drop_down,
                           color: Colors.white,
                         ),
-                        items: const [
+                        items: [
                           DropdownMenuItem(value: 'value1', child: Text('value1 text')),
                           DropdownMenuItem(value: 'value1', child: Text('value2 text')),
                         ],
@@ -178,11 +178,11 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 다시 울림
           Container(
-            padding: const EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "다시 울림",style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   Container(
@@ -192,8 +192,8 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                     ),
                     width: 200,
                     child: DropdownButton<String>(
-                      padding: const EdgeInsets.only(left: 15),
-                      hint: const Text(
+                      padding: EdgeInsets.only(left: 15),
+                      hint: Text(
                         "간격, 횟수 선택",
                         style: TextStyle(
                           fontSize: 15,
@@ -210,12 +210,12 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                           selectedAlarmRingAgain = newValue;
                         });
                       },
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           ),
                       underline: Container(),
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_drop_down,
                         color: Colors.white,
                         ),
@@ -236,11 +236,11 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 알람 끄기 미션
           Container(
-            padding: const EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "알람 끄기 미션",style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   Container(
@@ -250,8 +250,8 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                       ),
                       width: 200,
                       child: DropdownButton<String>(
-                        padding: const EdgeInsets.only(left: 15),
-                        hint: const Text(
+                        padding: EdgeInsets.only(left: 15),
+                        hint: Text(
                           "미션 선택",
                           style: TextStyle(
                               fontSize: 15,
@@ -268,12 +268,12 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                             selectedAlarmOffMission = newValue!;
                           });
                         },
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                         ),
                         underline: Container(),
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.arrow_drop_down,
                           color: Colors.white,
                         ),
@@ -295,13 +295,13 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 취소, 저장 버튼
           Container(
-            padding: const EdgeInsets.only(bottom:20),
+            padding: EdgeInsets.only(bottom:20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left:10, right: 5),
+                    padding: EdgeInsets.only(left:10, right: 5),
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -312,13 +312,13 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                               borderRadius: BorderRadius.circular(10)
                           )
                       ),
-                      child: const Text('취소', style: TextStyle(fontSize: 20, color: Colors.white)),
+                      child: Text('취소', style: TextStyle(fontSize: 20, color: Colors.white)),
                     ),
                   )
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 10),
+                    padding: EdgeInsets.only(left: 5, right: 10),
                     child: ElevatedButton(
                       onPressed: () {
 
@@ -329,7 +329,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                               borderRadius: BorderRadius.circular(10)
                           )
                       ),
-                      child: const Text('저장', style: TextStyle(fontSize: 20, color: Colors.white)),
+                      child: Text('저장', style: TextStyle(fontSize: 20, color: Colors.white)),
                     ),
                   )
                 )
