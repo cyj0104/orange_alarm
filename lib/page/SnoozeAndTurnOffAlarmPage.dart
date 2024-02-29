@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'SolveArithmeticMission.dart';
 
 
 class SnoozeAndTurnOffAlarmPage extends StatefulWidget {
@@ -139,7 +140,11 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                           padding: EdgeInsets.only(left: 5, right: 10),
                           child: ElevatedButton(
                             onPressed: () {
-
+                              // 조건에 따라서 미션 화면 이동하도록 구현
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,
