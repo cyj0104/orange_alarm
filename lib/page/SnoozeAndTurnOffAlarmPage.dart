@@ -46,7 +46,7 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      backgroundColor: Colors.grey.shade800,
+      backgroundColor: Colors.blueGrey.shade800,
       body: Column(
         children: [
           ////////// 현재 시간 표시

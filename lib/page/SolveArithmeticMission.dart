@@ -51,7 +51,7 @@ class _SolveArithmeticMissionPageState extends State<SolveArithmeticMissionPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade800,
+      backgroundColor: Colors.blueGrey.shade800,
       body: Column(
         children: [
 

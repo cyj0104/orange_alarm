@@ -56,7 +56,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade800,
+      backgroundColor: Colors.blueGrey.shade800,
       appBar: AppBar(
         title: Text('새 알람',style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.orange.shade900,
