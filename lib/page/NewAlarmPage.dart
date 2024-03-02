@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../data/AlarmSettingData.dart';
+
 class NewAlarmPage extends StatefulWidget {
-  NewAlarmPage({super.key});
+  final Function() addAlarm;
+
+  NewAlarmPage({
+    required this.addAlarm
+  });
 
   @override
   _NewAlarmPageState createState() => _NewAlarmPageState();
@@ -36,12 +42,21 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
     }
   }
 
-  List<String> weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-  List<bool> isSelected = [false, false, false, false, false, false, false];
+  Map<String, bool> weekdays= {
+    '일': false,
+    '월': false,
+    '화': false,
+    '수': false,
+    '목': false,
+    '금': false,
+    '토': false,
+  };
+  //List<String> weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+  //List<bool> isSelected = [false, false, false, false, false, false, false];
 
-  void toggleSelection(int index) {
+  void toggleSelection(String day) {
     setState(() {
-      isSelected[index] = !isSelected[index];
+      weekdays[day] = !weekdays[day]!;
     });
   }
 
@@ -52,6 +67,19 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
   List<String> alarmOffMission = ['사용 안 함', '바코드 찍기', '수학 문제 풀기'];
   String? selectedAlarmOffMission;
+
+
+
+  // AlarmSettingData _alarmSettingData () {
+  //   return AlarmSettingData(
+  //     selectedTime: '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'} ${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
+  //     weekdays: weekdays,
+  //     selectedAlarmBell: selectedAlarmBell,
+  //     selectedAlarmRingAgain: selectedAlarmRingAgain,
+  //     selectedAlarmOffMission: selectedAlarmOffMission
+  //   );
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,22 +131,14 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
             padding: EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(
-                weekdays.length,
-                (index) => InkWell(
-                  onTap: () { toggleSelection(index); },
-                  child: Column(
-                    children: [
-                      Text(
-                        weekdays[index],
-                        style: TextStyle(
-                          fontSize: 40, color: isSelected[index] ? Colors.orange.shade900 : Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              children: [
+                Column (
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                  ],
+                )
+              ]
             ),
           ),
 
@@ -321,7 +341,8 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                     padding: EdgeInsets.only(left: 5, right: 10),
                     child: ElevatedButton(
                       onPressed: () {
-
+                        widget.addAlarm();
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor : Colors.orange.shade900,

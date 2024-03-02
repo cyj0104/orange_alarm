@@ -5,7 +5,7 @@ class ContainerForAlarmItem extends StatefulWidget {
   final Key key;
   final Function(Key) onRemove;
 
-  const ContainerForAlarmItem({
+  ContainerForAlarmItem({
     required this.key,
     required this.onRemove,
   }): super(key: key);

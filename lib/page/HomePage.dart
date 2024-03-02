@@ -1,8 +1,7 @@
 import "package:flutter/material.dart";
+import "package:orange_alarm/data/AlarmSettingData.dart";
 import "package:orange_alarm/page/NewAlarmPage.dart";
 import "../widget/ContainerForAlarmItem.dart";
-
-
 
 class Homepage extends StatefulWidget {
   @override
@@ -12,8 +11,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List<Widget> alarmList = [];
 
-
-  void addAlarm() {
+  void _addAlarm() {
     int dateTime = DateTime.now().millisecondsSinceEpoch;
     late Key key = ValueKey(dateTime);
 
@@ -21,18 +19,17 @@ class _HomepageState extends State<Homepage> {
       alarmList.add(
         ContainerForAlarmItem(
           key: key,
-          onRemove: removeAlarm,
+          onRemove: _removeAlarm,
         ),
       );
     });
   }
 
-  void removeAlarm(Key key) {
+  void _removeAlarm(Key key) {
     setState(() {
       alarmList.removeWhere((container) => (container.key) == key);
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +42,6 @@ class _HomepageState extends State<Homepage> {
       body: ListView(
         //mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          ElevatedButton(
-            onPressed: () {
-              addAlarm();
-            },
-            child: Text('Add Container'),
-          ),
           ...alarmList,
           /////////////// 삭제할 코드 시작
           // GestureDetector(
@@ -70,7 +61,7 @@ class _HomepageState extends State<Homepage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NewAlarmPage()),
+            MaterialPageRoute(builder: (context) => NewAlarmPage(addAlarm: _addAlarm)),
           );
         },
         backgroundColor: Colors.orange.shade900,
