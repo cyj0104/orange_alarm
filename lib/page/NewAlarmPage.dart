@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/AlarmSettingData.dart';
 
 class NewAlarmPage extends StatefulWidget {
-  final Function() addAlarm;
+  final Function(AlarmSettingData) addAlarm;
 
   NewAlarmPage({
     required this.addAlarm
@@ -62,15 +62,15 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
 
 
-  // AlarmSettingData _alarmSettingData () {
-  //   return AlarmSettingData(
-  //     selectedTime: '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'} ${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
-  //     weekdays: weekdays,
-  //     selectedAlarmBell: selectedAlarmBell,
-  //     selectedAlarmRingAgain: selectedAlarmRingAgain,
-  //     selectedAlarmOffMission: selectedAlarmOffMission
-  //   );
-  // }
+  AlarmSettingData _alarmSettingData () {
+    return AlarmSettingData(
+      selectedTime: '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'} ${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
+      weekdays: weekdays,
+      selectedAlarmBell: selectedAlarmBell,
+      selectedAlarmRingAgain: selectedAlarmRingAgain,
+      selectedAlarmOffMission: selectedAlarmOffMission
+    );
+  }
 
 
   @override
@@ -345,7 +345,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                     padding: EdgeInsets.only(left: 5, right: 10),
                     child: ElevatedButton(
                       onPressed: () {
-                        widget.addAlarm();
+                        widget.addAlarm(_alarmSettingData());
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(

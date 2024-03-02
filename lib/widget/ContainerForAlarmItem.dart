@@ -5,9 +5,21 @@ class ContainerForAlarmItem extends StatefulWidget {
   final Key key;
   final Function(Key) onRemove;
 
+  final String selectedTime;
+  final Map<String, bool> weekdays;
+  final String? selectedAlarmBell;
+  final String? selectedAlarmRingAgain;
+  final String? selectedAlarmOffMission;
+
   ContainerForAlarmItem({
     required this.key,
     required this.onRemove,
+
+    required this.selectedTime,
+    required this.weekdays,
+    required this.selectedAlarmBell,
+    required this.selectedAlarmRingAgain,
+    required this.selectedAlarmOffMission,
   }): super(key: key);
 
   @override
@@ -16,6 +28,15 @@ class ContainerForAlarmItem extends StatefulWidget {
 
 class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
   bool switchButton = true;
+
+  String chosenWeekdays(Map<String, bool> weekdays) {
+    if(weekdays.values.contains(true)) {
+      return weekdays.keys.where((key) => weekdays[key] == true).join(', ');
+    }
+    else {
+      return '반복 없음';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +55,8 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('AM 10:00', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
-                    Text('일, 월, 화, 수, 목, 금, 토', style: TextStyle(fontSize: 15)),
+                    Text(widget.selectedTime, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
+                    Text(chosenWeekdays(widget.weekdays), style: TextStyle(fontSize: 15)),
                   ],
                 ),
               ),

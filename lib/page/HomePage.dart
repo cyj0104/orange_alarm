@@ -11,7 +11,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List<Widget> alarmList = [];
 
-  void _addAlarm() {
+  void _addAlarm(AlarmSettingData alarmSettingData) {
     int dateTime = DateTime.now().millisecondsSinceEpoch;
     late Key key = ValueKey(dateTime);
 
@@ -20,6 +20,11 @@ class _HomepageState extends State<Homepage> {
         ContainerForAlarmItem(
           key: key,
           onRemove: _removeAlarm,
+          selectedTime: alarmSettingData.selectedTime,
+          weekdays: alarmSettingData.weekdays,
+          selectedAlarmBell: alarmSettingData.selectedAlarmBell,
+          selectedAlarmRingAgain: alarmSettingData.selectedAlarmRingAgain,
+          selectedAlarmOffMission: alarmSettingData.selectedAlarmOffMission,
         ),
       );
     });
