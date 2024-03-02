@@ -105,8 +105,8 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'}  ',
-                    style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                    '${_selectedTime.period == DayPeriod.am ? 'AM' : 'PM'} ',
+                    style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   Text(
                       '${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
@@ -149,7 +149,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 알람음 선택
           Container(
-            padding: EdgeInsets.only(left:10, top:50, right:10, bottom:0),
+            padding: EdgeInsets.only(left:20, top:50, right:20, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -202,7 +202,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 다시 울림
           Container(
-            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            padding: EdgeInsets.only(left:20, top:30, right:20, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -260,7 +260,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 알람 끄기 미션
           Container(
-            padding: EdgeInsets.only(left:10, top:30, right:10, bottom:0),
+            padding: EdgeInsets.only(left:20, top:30, right:20, bottom:0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -319,7 +319,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
           ///////////// 취소, 저장 버튼
           Container(
-            padding: EdgeInsets.only(bottom:20),
+            padding: EdgeInsets.only(bottom:40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

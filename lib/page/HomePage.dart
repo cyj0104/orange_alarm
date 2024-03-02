@@ -47,6 +47,9 @@ class _HomepageState extends State<Homepage> {
       body: ListView(
         //mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Padding(
+              padding: EdgeInsets.only(top: 20)
+          ),
           ...alarmList,
           /////////////// 삭제할 코드 시작
           // GestureDetector(
