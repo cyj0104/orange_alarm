@@ -42,7 +42,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
     }
   }
 
-  Map<String, bool> weekdays= {
+  Map<String, bool> weekdays = {
     '일': false,
     '월': false,
     '화': false,
@@ -51,14 +51,6 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
     '금': false,
     '토': false,
   };
-  //List<String> weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-  //List<bool> isSelected = [false, false, false, false, false, false, false];
-
-  void toggleSelection(String day) {
-    setState(() {
-      weekdays[day] = !weekdays[day]!;
-    });
-  }
 
   String? selectedAlarmBell;
 
@@ -103,7 +95,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
         children: [
           ///////////// 시간 선택
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () {
@@ -118,7 +110,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                   ),
                   Text(
                       '${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
-                      style: TextStyle(fontSize: 115, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 110, color: Colors.white, fontWeight: FontWeight.bold),
                   )
                 ],
               )
@@ -131,14 +123,26 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
             padding: EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column (
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-
-                  ],
-                )
-              ]
+              children: weekdays.keys.map((String key) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      weekdays[key] = !weekdays[key]!;
+                    });
+                  },
+                  child: Container(
+                    color: Colors.transparent, // 배경색 투명으로 설정
+                    child: Text(
+                      key,
+                      style: TextStyle(
+                        fontSize: 40.0,
+                        color: weekdays[key]! ? Colors.orange.shade900 : Colors.white,
+                      ),
+                    ),
+                  ),
+                );
+               }
+              ).toList(),
             ),
           ),
 
