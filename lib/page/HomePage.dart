@@ -42,7 +42,7 @@ class _HomepageState extends State<Homepage> {
         backgroundColor: Colors.orange.shade900,
       ),
       body: ListView(
-        padding: EdgeInsets.only(top:10, bottom: 90),
+        padding: EdgeInsets.only(top:10, bottom: 150),
         children: [
           ...alarmList
         ]

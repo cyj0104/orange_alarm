@@ -56,17 +56,20 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         margin: EdgeInsets.only(top: 10, left: 10, right: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Colors.blueGrey.shade200,
+          color: switchButton ? Colors.blueGrey.shade200 : Colors.blueGrey.shade600,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 15),
+              padding: EdgeInsets.only(left: 20, bottom: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${widget.alarmSettingData.convertToStringSelectedTime}', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Text('${widget.alarmSettingData.convertToStringSelectedTime}', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
+                  ),
                   Text(chosenWeekdays(widget.alarmSettingData.weekdays), style: TextStyle(fontSize: 15)),
                 ],
               ),
@@ -82,6 +85,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
                     onChanged: (value) {
                       setState(() {
                         switchButton = value;
+
                       });
                     },
                   ),
