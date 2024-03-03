@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:orange_alarm/data/AlarmSettingData.dart";
+import "package:orange_alarm/page/ModifyAlarmPage.dart";
 import "package:orange_alarm/page/NewAlarmPage.dart";
 import "../widget/ContainerForAlarmItem.dart";
 
@@ -20,11 +21,7 @@ class _HomepageState extends State<Homepage> {
         ContainerForAlarmItem(
           key: key,
           onRemove: _removeAlarm,
-          selectedTime: alarmSettingData.selectedTime,
-          weekdays: alarmSettingData.weekdays,
-          selectedAlarmBell: alarmSettingData.selectedAlarmBell,
-          selectedAlarmRingAgain: alarmSettingData.selectedAlarmRingAgain,
-          selectedAlarmOffMission: alarmSettingData.selectedAlarmOffMission,
+          alarmSettingData: alarmSettingData,
         ),
       );
     });
@@ -32,7 +29,7 @@ class _HomepageState extends State<Homepage> {
 
   void _removeAlarm(Key key) {
     setState(() {
-      alarmList.removeWhere((container) => (container.key) == key);
+      alarmList.removeWhere((containerForAlarmItem) => (containerForAlarmItem.key) == key);
     });
   }
 
@@ -45,12 +42,10 @@ class _HomepageState extends State<Homepage> {
         backgroundColor: Colors.orange.shade900,
       ),
       body: ListView(
-        //mainAxisAlignment: MainAxisAlignment.end,
+        padding: EdgeInsets.only(top:10, bottom: 90),
         children: [
-          Padding(
-              padding: EdgeInsets.only(top: 20)
-          ),
-          ...alarmList,
+          ...alarmList
+        ]
           /////////////// 삭제할 코드 시작
           // GestureDetector(
           //   onTap: () {
@@ -60,10 +55,6 @@ class _HomepageState extends State<Homepage> {
           //     );
           //   },
           // )
-          Padding(
-              padding: EdgeInsets.only(bottom: 90)
-          ),
-        ]
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

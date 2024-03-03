@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
 
 class AlarmSettingData {
-  late String selectedTime;
-  late Map<String, bool> weekdays;
-  late String? selectedAlarmBell;
-  late String? selectedAlarmRingAgain;
-  late String? selectedAlarmOffMission;
+  TimeOfDay selectedTime;
+  late String convertToStringSelectedTime =
+      '${selectedTime.period == DayPeriod.am ? 'AM' : 'PM'} ${selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}';
+  Map<String, bool> weekdays;
+  String selectedAlarmBell = '';
+  String selectedAlarmRingAgain = '';
+  String selectedAlarmOffMission = '';
 
   AlarmSettingData({
     required this.selectedTime,
