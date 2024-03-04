@@ -14,13 +14,10 @@ class _HomepageState extends State<Homepage> {
   List<Widget> alarmList = [];
 
   void _addAlarm(AlarmSettingData alarmSettingData) {
-    int dateTime = DateTime.now().millisecondsSinceEpoch;
-    late Key key = ValueKey(dateTime);
-
     setState(() {
       alarmList.add(
         ContainerForAlarmItem(
-          key: key,
+          key: UniqueKey(),
           onRemove: _removeAlarm,
           alarmSettingData: alarmSettingData,
         ),
