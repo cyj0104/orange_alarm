@@ -150,7 +150,7 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                               // );
 
                               ///// 바코드 찍기
-                              BarcodeScanMisson().barcodeScan(context);
+                              BarcodeScanMission().barcodeScan(context);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,
