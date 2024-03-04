@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:orange_alarm/page/BarcodeScanMission.dart';
 import 'SolveArithmeticMission.dart';
 
 
@@ -141,10 +142,15 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                           child: ElevatedButton(
                             onPressed: () {
                               // 조건에 따라서 미션 화면 이동하도록 구현
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
-                              );
+
+                              ///// 수학 문제 풀기
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
+                              // );
+
+                              ///// 바코드 찍기
+                              BarcodeScanMisson().barcodeScan(context);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,
