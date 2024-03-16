@@ -45,7 +45,7 @@ class _ModifyAlarmPageState extends State<ModifyAlarmPage> {
 
   late Map<String, bool> weekdays = widget.alarmSettingData.weekdays;
 
-  List<String> alarmBell = ['무음', '알람음1'];
+  List<String> alarmBell = ['무음', '알람음1', '알람음2'];
   late String selectedAlarmBell = widget.alarmSettingData.selectedAlarmBell;
 
   List<String> alarmRingAgain = ['사용 안 함', '5분, 3회', '5분, 5회', '10분, 2회', '10분, 3회'];

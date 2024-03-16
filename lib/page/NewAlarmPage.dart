@@ -51,7 +51,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
     '토': false,
   };
 
-  List<String> alarmBell = ['무음', '알람음1'];
+  List<String> alarmBell = ['무음', '알람음1', '알람음2'];
   String selectedAlarmBell = '무음';
 
   List<String> alarmRingAgain = ['사용 안 함', '5분, 3회', '5분, 5회', '10분, 2회', '10분, 3회'];
