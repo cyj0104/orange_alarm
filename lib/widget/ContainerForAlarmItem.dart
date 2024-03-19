@@ -142,7 +142,9 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 현재 시간이 맞는지 다시 체크 시작
         sleep(Duration(seconds: 35));
         _triggerAlarm ();
-        _timerForAlarmAgain.cancel();
+        if(_selectedAlarmRingAgain != '사용 안 함') {
+          _timerForAlarmAgain.cancel();
+        }
       }
 
     }
