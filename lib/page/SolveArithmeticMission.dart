@@ -40,7 +40,7 @@ class _SolveArithmeticMissionPageState extends State<SolveArithmeticMissionPage>
   void checkAnswer() {
     setState(() {
       if (correctAnswer.toString() == userAnswer) {
-        userAnswer = 'Correct!!';   // 알람 끄기 요청해야함
+        Navigator.pop(context);
       }
       else {
         userAnswer = '';
