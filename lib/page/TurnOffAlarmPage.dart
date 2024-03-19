@@ -4,7 +4,11 @@ import 'SolveArithmeticMission.dart';
 
 
 class TurnOffAlarmPage extends StatefulWidget {
-  TurnOffAlarmPage({super.key});
+  final String alarmOffMission;
+
+  TurnOffAlarmPage({
+    required this.alarmOffMission,
+  });
 
   @override
   _TurnOffAlarmPageState createState() => _TurnOffAlarmPageState();
@@ -40,7 +44,7 @@ class _TurnOffAlarmPageState extends State<TurnOffAlarmPage> {
   }
 
   List<String> changeAlarmOffMission = ['바코드 찍기', '수학 문제 풀기'];
-  String? selectedChangeAlarmOffMission; // 알람 생성 및 알람 수정 시 선택한 알람 끄기 미션 정보를 넣어줘야 함.
+  late String selectedChangeAlarmOffMission = widget.alarmOffMission; // 알람 생성 및 알람 수정 시 선택한 알람 끄기 미션 정보를 넣어줘야 함.
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +90,8 @@ class _TurnOffAlarmPageState extends State<TurnOffAlarmPage> {
                   isExpanded: true,
                   onChanged: (String? newValue) {
                     setState(() {
-                      selectedChangeAlarmOffMission = newValue;
+                      selectedChangeAlarmOffMission = newValue!;
+                      // 변경한 알람 끄기 미션 값을 전달해야함
                     });
                   },
                   style: TextStyle(

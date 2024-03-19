@@ -1,7 +1,16 @@
+import "dart:async";
+import "dart:io";
+
 import "package:flutter/material.dart";
+import "package:just_audio/just_audio.dart";
+import "package:orange_alarm/widget/TriggerAlarm.dart";
 
 import "../data/AlarmSettingData.dart";
 import "../page/ModifyAlarmPage.dart";
+import "../page/SnoozeAndTurnOffAlarmPage.dart";
+import "../page/SnoozeAndTurnOffAlarmPageWithoutMission.dart";
+import "../page/TurnOffAlarmPage.dart";
+import "../page/TurnOffAlarmPageWithoutMission.dart";
 
 class ContainerForAlarmItem extends StatefulWidget {
   @override
@@ -37,6 +46,234 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
       widget.alarmSettingData = alarmSettingData;
     });
   }
+
+
+
+  Timer _timerForPeriodicCheck = Timer(Duration.zero, () { });
+  Timer _timerForAlarmAgain = Timer(Duration.zero, () { });
+  Timer _timerForCheckCurrentTime = Timer(Duration.zero, () { });
+  DateTime now = DateTime.now();
+
+  late TimeOfDay _selectedTime = widget.alarmSettingData.selectedTime;   // 설정한 시간
+
+  late Map<String, bool> _selectedWeekdays = widget.alarmSettingData.weekdays;  // 반복 요일
+
+  late String _selectedAlarmBell = widget.alarmSettingData.selectedAlarmBell;  // 알림음
+
+  late String _selectedAlarmRingAgain = widget.alarmSettingData.selectedAlarmRingAgain;   // 반복 간격, 횟수
+  late List<String> _parts = _selectedAlarmRingAgain.split(',');
+  late int _intervalAgain = int.parse(_parts[0].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 간격
+  late int _countAgain = int.parse(_parts[1].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 횟수
+
+  late String _selectedAlarmOffMission = widget.alarmSettingData.selectedAlarmOffMission;  // 알람 끄기 미션
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _checkNowTime();
+    _triggerAlarm ();
+  }
+
+  // 1초 간격으로 현재 시간을 now에 저장
+  void _checkNowTime() {
+    _timerForCheckCurrentTime = Timer.periodic(Duration(seconds: 1),(Timer timer) {
+      print('CheckCurrentTime');
+      now = DateTime.now();
+      print(now);
+    });
+  }
+
+  void _triggerAlarm () {
+    _timerForPeriodicCheck = Timer.periodic(Duration(seconds: 30), (Timer timer) {
+      print('Periodic');
+      _checkAlarmDateSetting();
+    });
+  }
+
+  void _ringAlarm() {
+    print('called ringAlarm!!!!!!!!');
+    // _intervalAgain마다 띄울 때마다 --
+    _countAgain--;
+
+    // 알람 끄기 미션 선택했다면,
+    if(_selectedAlarmOffMission == '바코드 찍기' || _selectedAlarmOffMission == '수학 문제 풀기') {
+
+      // 반복 횟수가 남았다면,
+      if(_countAgain > 1) {
+        // 알람음 재생
+        _playAlarmSound();
+
+        // 화면 띄우기
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPage(
+            // 타이머 해제할 수 있도록, 타이머 객체 전달
+            alarmOffMission: _selectedAlarmOffMission,
+          )),
+        );
+
+        // 알람음 중지
+        _stopAlarmSound();
+      }
+
+      // 반복 횟수가 남지 않았다면,
+      else if(_countAgain == 1) {
+        // 알람음 재생
+        _playAlarmSound();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              TurnOffAlarmPage(
+                alarmOffMission: _selectedAlarmOffMission,
+              )),
+        );
+
+        // 알람음 중지
+        _stopAlarmSound();
+
+        // 현재 시간이 맞는지 다시 체크 시작
+        sleep(Duration(seconds: 35));
+        _triggerAlarm ();
+      }
+
+    }
+
+    // 알람 끄기 미션 선택 안했다면,
+    else {
+
+      // 반복 횟수가 남았다면,
+      if(_countAgain > 1) {
+        // 알람음 재생
+        _playAlarmSound();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPageWithoutMission()),
+        );
+
+        // 알람음 중지
+        _stopAlarmSound();
+      }
+
+      // 반복 횟수가 남지 않았다면,
+      else if(_countAgain == 1) {
+        // 알람음 재생
+        _playAlarmSound();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TurnOffAlarmPageWithoutMission()),
+        );
+
+        // 알람음 중지
+        _stopAlarmSound();
+
+        // 현재 시간이 맞는지 다시 체크 시작
+        sleep(Duration(seconds: 35));
+        _triggerAlarm ();
+      }
+
+    }
+  }
+
+  bool _checkAlarmDateSetting() {
+    late String today;
+
+    switch (now.weekday) {
+      case DateTime.monday:
+        today = '월';
+        break;
+      case DateTime.tuesday:
+        today = '화';
+        break;
+      case DateTime.wednesday:
+        today = '수';
+        break;
+      case DateTime.thursday:
+        today = '목';
+        break;
+      case DateTime.friday:
+        today = '금';
+        break;
+      case DateTime.saturday:
+        today = '토';
+        break;
+      case DateTime.sunday:
+        today = '일';
+        break;
+    }
+
+    bool checkSelectedWeekdaysResult = (_selectedWeekdays[today] == true);
+    bool checkSelectedTimeHourResult = (now.hour == _selectedTime.hour) ;
+    bool checkSelectedTimeMinuteResult = (now.minute == _selectedTime.minute);
+
+    if (checkSelectedWeekdaysResult && checkSelectedTimeHourResult && checkSelectedTimeMinuteResult) {
+      // _intervalAgain분 간격으로 스누즈 또는 알람 끄기 화면 띄우기
+      _ringAlarm();
+      _timerForPeriodicCheck.cancel();
+
+      _timerForAlarmAgain = Timer.periodic(Duration(minutes: _intervalAgain), (Timer timer) {
+        print(_intervalAgain);
+        print(_countAgain);
+        print('AlarmAgain');
+
+        _ringAlarm();
+      });
+
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+
+  AudioPlayer player = AudioPlayer();
+
+  void _playAlarmSound() async {
+    if (_selectedAlarmBell == '알람음1') {
+      await player.setAsset('assets/alarm_sound_1.mp3');
+
+      player.load();
+      for (int i = 0; i < 30; i++) {
+        player.play();
+      }
+    }
+    else if(_selectedAlarmBell == '알람음2') {
+      await player.setAsset('assets/alarm_sound_2.mp3');
+
+      player.load();
+      for (int i = 0; i < 30; i++) {
+        player.play();
+      }
+    }
+    else {
+      // '무음'이라면, 진동
+    }
+  }
+
+  void _stopAlarmSound() {
+    player.stop();
+  }
+
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timerForCheckCurrentTime.cancel();
+    _timerForPeriodicCheck.cancel();
+    _timerForAlarmAgain.cancel();
+  }
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +322,15 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
                     onChanged: (value) {
                       setState(() {
                         switchButton = value;
-
                       });
+                      if(switchButton == true) {
+                        // 알람 활성화
+                         // _triggerAlarm ();
+                      }
+                      else {
+                        // 알람 비활성화
+                        // 타이머를 cancel하면 될듯
+                      }
                     },
                   ),
                   IconButton(

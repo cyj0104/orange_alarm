@@ -4,18 +4,12 @@ import 'package:orange_alarm/page/BarcodeScanMission.dart';
 import 'SolveArithmeticMission.dart';
 
 
-class SnoozeAndTurnOffAlarmPage extends StatefulWidget {
-  final String alarmOffMission;
-
-  SnoozeAndTurnOffAlarmPage({
-    required this.alarmOffMission,
-  });
-
+class SnoozeAndTurnOffAlarmPageWithoutMission extends StatefulWidget {
   @override
-  _SnoozeAndTurnOffAlarmPageState createState() => _SnoozeAndTurnOffAlarmPageState();
+  _SnoozeAndTurnOffAlarmPageWithoutMissionState createState() => _SnoozeAndTurnOffAlarmPageWithoutMissionState();
 }
 
-class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
+class _SnoozeAndTurnOffAlarmPageWithoutMissionState extends State<SnoozeAndTurnOffAlarmPageWithoutMission> {
   late TimeOfDay _currentTime;
   late Timer _timer;
 
@@ -45,11 +39,6 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
   }
 
 
-
-  List<String> changeAlarmOffMission = ['바코드 찍기', '수학 문제 풀기'];
-  late String selectedChangeAlarmOffMission = widget.alarmOffMission;
-  // 알람 생성 및 알람 수정 시 선택한 알람 끄기 미션 정보 전달.
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,48 +66,6 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
 
           Spacer(),
 
-          /////// 알람 끄기 미션 바꾸기
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, bottom: 15),
-            child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.orange.shade900,
-                ),
-                child: DropdownButton<String>(
-                  padding: EdgeInsets.only(left: 20),
-                  value: selectedChangeAlarmOffMission,
-                  borderRadius: BorderRadius.circular(10),
-                  dropdownColor: Colors.orange.shade900,
-                  isExpanded: true,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedChangeAlarmOffMission = newValue!;
-                    });
-                  },
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                  underline: Container(),
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.white,
-                  ),
-                  items: changeAlarmOffMission.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                      ),
-                    );
-                  }).toList(),
-                )
-            ),
-          ),
-
-
           ////// 알람 미루기, 알람 끄기 버튼
           Container(
               padding: EdgeInsets.only(bottom:20),
@@ -130,7 +77,7 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                           padding: EdgeInsets.only(left:10, right: 5),
                           child: ElevatedButton(
                             onPressed: () {
-                              //
+                              // 알람 미루기 함수 호출
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,
@@ -148,16 +95,8 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                           padding: EdgeInsets.only(left: 5, right: 10),
                           child: ElevatedButton(
                             onPressed: () {
-                              // 조건에 따라서 미션 화면 이동하도록 구현
+                              // 알람 끄기 함수 호출
 
-                              ///// 수학 문제 풀기
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
-                              // );
-
-                              ///// 바코드 찍기
-                              BarcodeScanMission().barcodeScan(context);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,

@@ -44,14 +44,14 @@ class _HomepageState extends State<Homepage> {
         children: [
           ...alarmList,
           // /////////// 삭제할 코드
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPage()),
-              );
-            },
-          )
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPage()),
+          //     );
+          //   },
+          // )
           // ///////////
         ]
       ),
