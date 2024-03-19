@@ -61,17 +61,26 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
   late String _selectedAlarmBell = widget.alarmSettingData.selectedAlarmBell;  // 알림음
 
   late String _selectedAlarmRingAgain = widget.alarmSettingData.selectedAlarmRingAgain;   // 반복 간격, 횟수
-  late List<String> _parts = _selectedAlarmRingAgain.split(',');
-  late int _intervalAgain = int.parse(_parts[0].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 간격
-  late int _countAgain = int.parse(_parts[1].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 횟수
+  late List<String> _parts;
+  late int _intervalAgain;
+  late int _countAgain;
 
   late String _selectedAlarmOffMission = widget.alarmSettingData.selectedAlarmOffMission;  // 알람 끄기 미션
-
-
 
   @override
   void initState() {
     super.initState();
+
+    if(_selectedAlarmRingAgain != '사용 안 함') {
+      _parts = _selectedAlarmRingAgain.split(',');
+      _intervalAgain = int.parse(_parts[0].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 간격
+      _countAgain = int.parse(_parts[1].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 횟수
+    }
+    else {
+      _intervalAgain = 0;
+      _countAgain = 2;
+    }
+
     _checkNowTime();
     _triggerAlarm ();
   }
@@ -79,21 +88,17 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
   // 1초 간격으로 현재 시간을 now에 저장
   void _checkNowTime() {
     _timerForCheckCurrentTime = Timer.periodic(Duration(seconds: 1),(Timer timer) {
-      print('CheckCurrentTime');
       now = DateTime.now();
-      print(now);
     });
   }
 
   void _triggerAlarm () {
     _timerForPeriodicCheck = Timer.periodic(Duration(seconds: 30), (Timer timer) {
-      print('Periodic');
       _checkAlarmDateSetting();
     });
   }
 
-  void _ringAlarm() {
-    print('called ringAlarm!!!!!!!!');
+  Future<void> _ringAlarm() async {
     // _intervalAgain마다 띄울 때마다 --
     _countAgain--;
 
@@ -106,7 +111,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         _playAlarmSound();
 
         // 화면 띄우기
-        Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPage(
             // 타이머 해제할 수 있도록, 타이머 객체 전달
@@ -123,7 +128,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 알람음 재생
         _playAlarmSound();
 
-        Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
               TurnOffAlarmPage(
@@ -137,6 +142,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 현재 시간이 맞는지 다시 체크 시작
         sleep(Duration(seconds: 35));
         _triggerAlarm ();
+        _timerForAlarmAgain.cancel();
       }
 
     }
@@ -149,7 +155,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 알람음 재생
         _playAlarmSound();
 
-        Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPageWithoutMission()),
         );
@@ -163,7 +169,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 알람음 재생
         _playAlarmSound();
 
-        Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => TurnOffAlarmPageWithoutMission()),
         );
@@ -174,12 +180,13 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 현재 시간이 맞는지 다시 체크 시작
         sleep(Duration(seconds: 35));
         _triggerAlarm ();
+        _timerForAlarmAgain.cancel();
       }
 
     }
   }
 
-  bool _checkAlarmDateSetting() {
+  void _checkAlarmDateSetting() {
     late String today;
 
     switch (now.weekday) {
@@ -212,21 +219,14 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
     if (checkSelectedWeekdaysResult && checkSelectedTimeHourResult && checkSelectedTimeMinuteResult) {
       // _intervalAgain분 간격으로 스누즈 또는 알람 끄기 화면 띄우기
-      _ringAlarm();
       _timerForPeriodicCheck.cancel();
+      _ringAlarm();
 
-      _timerForAlarmAgain = Timer.periodic(Duration(minutes: _intervalAgain), (Timer timer) {
-        print(_intervalAgain);
-        print(_countAgain);
-        print('AlarmAgain');
-
-        _ringAlarm();
-      });
-
-      return true;
-    }
-    else {
-      return false;
+      if (_selectedAlarmRingAgain != '사용 안 함') {
+        _timerForAlarmAgain = Timer.periodic(Duration(minutes: _intervalAgain), (Timer timer) {
+          _ringAlarm();
+        });
+      }
     }
   }
 
