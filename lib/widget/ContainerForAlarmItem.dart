@@ -3,7 +3,6 @@ import "dart:io";
 
 import "package:flutter/material.dart";
 import "package:just_audio/just_audio.dart";
-import "package:orange_alarm/widget/TriggerAlarm.dart";
 
 import "../data/AlarmSettingData.dart";
 import "../page/ModifyAlarmPage.dart";
