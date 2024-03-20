@@ -91,7 +91,7 @@ class _ModifyAlarmPageState extends State<ModifyAlarmPage> {
                     ),
                     Text(
                       '${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
-                      style: TextStyle(fontSize: 100, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 95, color: Colors.white, fontWeight: FontWeight.bold),
                     )
                   ],
                 )

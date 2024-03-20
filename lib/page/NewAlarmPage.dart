@@ -110,7 +110,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                   ),
                   Text(
                       '${_selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${_selectedTime.minute.toString().padLeft(2, '0')}',
-                      style: TextStyle(fontSize: 100, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 85, color: Colors.white, fontWeight: FontWeight.bold),
                   )
                 ],
               )
