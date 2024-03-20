@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'BarcodeScanMission.dart';
 import 'SolveArithmeticMission.dart';
 
 
@@ -61,11 +62,11 @@ class _TurnOffAlarmPageState extends State<TurnOffAlarmPage> {
               children: [
                 Text(
                   '${_currentTime.period == DayPeriod.am ? 'AM' : 'PM'}  ',
-                  style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '${_currentTime.hourOfPeriod.toString().padLeft(2, '0')}:${_currentTime.minute.toString().padLeft(2, '0')}',
-                  style: TextStyle(fontSize: 115, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 95, color: Colors.white, fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -120,12 +121,19 @@ class _TurnOffAlarmPageState extends State<TurnOffAlarmPage> {
           Container(
               padding: EdgeInsets.only(left: 10, right: 10, bottom:20),
               child: ElevatedButton(
-                onPressed: () {
-                  // 조건에 따라서 미션 화면 이동하도록 구현
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
-                  );
+                onPressed: () async {
+                  ///// 수학 문제 풀기
+                  if(selectedChangeAlarmOffMission == '수학 문제 풀기') {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
+                    );
+                  }
+                  ///// 바코드 찍기
+                  else if(selectedChangeAlarmOffMission == '바코드 찍기') {
+                    await BarcodeScanMission().barcodeScan(context);
+                  }
+                  Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor : Colors.orange.shade900,

@@ -65,11 +65,11 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
               children: [
                 Text(
                   '${_currentTime.period == DayPeriod.am ? 'AM' : 'PM'}  ',
-                  style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '${_currentTime.hourOfPeriod.toString().padLeft(2, '0')}:${_currentTime.minute.toString().padLeft(2, '0')}',
-                  style: TextStyle(fontSize: 115, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 95, color: Colors.white, fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -130,7 +130,7 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                           padding: EdgeInsets.only(left:10, right: 5),
                           child: ElevatedButton(
                             onPressed: () {
-                              //
+                              Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,
@@ -154,13 +154,12 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                                   context,
                                   MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
                                 );
-                                Navigator.pop(context);
                               }
                               ///// 바코드 찍기
                               else if(selectedChangeAlarmOffMission == '바코드 찍기') {
                                 await BarcodeScanMission().barcodeScan(context);
-                                Navigator.pop(context);
                               }
+                              Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,

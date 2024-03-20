@@ -54,11 +54,11 @@ class _SnoozeAndTurnOffAlarmPageWithoutMissionState extends State<SnoozeAndTurnO
               children: [
                 Text(
                   '${_currentTime.period == DayPeriod.am ? 'AM' : 'PM'}  ',
-                  style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '${_currentTime.hourOfPeriod.toString().padLeft(2, '0')}:${_currentTime.minute.toString().padLeft(2, '0')}',
-                  style: TextStyle(fontSize: 115, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 95, color: Colors.white, fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -77,7 +77,7 @@ class _SnoozeAndTurnOffAlarmPageWithoutMissionState extends State<SnoozeAndTurnO
                           padding: EdgeInsets.only(left:10, right: 5),
                           child: ElevatedButton(
                             onPressed: () {
-                              // 알람 미루기 함수 호출
+                              Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,
@@ -95,8 +95,7 @@ class _SnoozeAndTurnOffAlarmPageWithoutMissionState extends State<SnoozeAndTurnO
                           padding: EdgeInsets.only(left: 5, right: 10),
                           child: ElevatedButton(
                             onPressed: () {
-                              // 알람 끄기 함수 호출
-
+                              Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor : Colors.orange.shade900,
