@@ -147,17 +147,17 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 5, right: 10),
                           child: ElevatedButton(
-                            onPressed: () async {
+                            onPressed: () {
                               ///// 수학 문제 풀기
                               if(selectedChangeAlarmOffMission == '수학 문제 풀기') {
-                                await Navigator.push(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
                                 );
                               }
                               ///// 바코드 찍기
                               else if(selectedChangeAlarmOffMission == '바코드 찍기') {
-                                await BarcodeScanMission().barcodeScan(context);
+                                BarcodeScanMission().barcodeScan(context);
                               }
                               Navigator.pop(context);
                             },

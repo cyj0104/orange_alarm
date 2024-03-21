@@ -97,7 +97,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
     });
   }
 
-  Future<void> _ringAlarm() async {
+  void _ringAlarm() {
     // _intervalAgain마다 띄울 때마다 --
     _countAgain--;
 
@@ -110,7 +110,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         _playAlarmSound();
 
         // 화면 띄우기
-        await Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPage(
             // 타이머 해제할 수 있도록, 타이머 객체 전달
@@ -127,7 +127,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 알람음 재생
         _playAlarmSound();
 
-        await Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
               TurnOffAlarmPage(
@@ -156,7 +156,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 알람음 재생
         _playAlarmSound();
 
-        await Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPageWithoutMission()),
         );
@@ -170,7 +170,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         // 알람음 재생
         _playAlarmSound();
 
-        await Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => TurnOffAlarmPageWithoutMission()),
         );
@@ -234,9 +234,9 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
   AudioPlayer player = AudioPlayer();
 
-  void _playAlarmSound() async {
+  void _playAlarmSound() {
     if (_selectedAlarmBell == '알람음1') {
-      await player.setAsset('assets/alarm_sound_1.mp3');
+      player.setAsset('assets/alarm_sound_1.mp3');
 
       player.load();
       for (int i = 0; i < 30; i++) {
@@ -244,20 +244,19 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
       }
     }
     else if(_selectedAlarmBell == '알람음2') {
-      await player.setAsset('assets/alarm_sound_2.mp3');
+      player.setAsset('assets/alarm_sound_2.mp3');
 
       player.load();
       for (int i = 0; i < 30; i++) {
         player.play();
       }
     }
-    else {
-      // '무음'이라면, 진동
-    }
   }
 
   void _stopAlarmSound() {
-    player.stop();
+    if (_selectedAlarmBell == '알람음1' || _selectedAlarmBell == '알람음2') {
+      player.stop();
+    }
   }
 
 
