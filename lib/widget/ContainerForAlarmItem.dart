@@ -77,7 +77,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
     }
     else {
       _intervalAgain = 0;
-      _countAgain = 2;
+      _countAgain = 1;
     }
 
     _checkNowTime();
@@ -105,7 +105,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
     if(_selectedAlarmOffMission == '바코드 찍기' || _selectedAlarmOffMission == '수학 문제 풀기') {
 
       // 반복 횟수가 남았다면,
-      if(_countAgain > 1) {
+      if(_countAgain > 0) {
         // 알람음 재생
         _playAlarmSound();
 
@@ -123,7 +123,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
       }
 
       // 반복 횟수가 남지 않았다면,
-      else if(_countAgain == 1) {
+      else if(_countAgain == 0) {
         // 알람음 재생
         _playAlarmSound();
 
@@ -152,7 +152,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
     else {
 
       // 반복 횟수가 남았다면,
-      if(_countAgain > 1) {
+      if(_countAgain > 0) {
         // 알람음 재생
         _playAlarmSound();
 
@@ -166,7 +166,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
       }
 
       // 반복 횟수가 남지 않았다면,
-      else if(_countAgain == 1) {
+      else if(_countAgain == 0) {
         // 알람음 재생
         _playAlarmSound();
 
@@ -324,13 +324,16 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
                       setState(() {
                         switchButton = value;
                       });
+                      // 알람 활성화
                       if(switchButton == true) {
-                        // 알람 활성화
-                         // _triggerAlarm ();
+                        _checkNowTime();
+                        _triggerAlarm();
                       }
+                      // 알람 비활성화
                       else {
-                        // 알람 비활성화
-                        // 타이머를 cancel하면 될듯
+                        _timerForCheckCurrentTime.cancel();
+                        _timerForPeriodicCheck.cancel();
+                        _timerForAlarmAgain.cancel();
                       }
                     },
                   ),
