@@ -119,7 +119,7 @@ class _TurnOffAlarmPageState extends State<TurnOffAlarmPage> {
 
           ////// 알람 끄기 버튼
           Container(
-              padding: EdgeInsets.only(left: 10, right: 10, bottom:20),
+              padding: EdgeInsets.only(left: 10, right: 10, bottom:40),
               child: ElevatedButton(
                 onPressed: () async {
                   ///// 수학 문제 풀기

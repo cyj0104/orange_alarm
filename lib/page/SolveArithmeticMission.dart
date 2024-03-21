@@ -56,7 +56,7 @@ class _SolveArithmeticMissionPageState extends State<SolveArithmeticMissionPage>
         children: [
 
           Container(
-              padding: EdgeInsets.only(top: 30),
+              padding: EdgeInsets.only(top: 50),
               alignment: Alignment.center,
               child: Text(
                 '${randomNumber1} - ${randomNumber2} ',

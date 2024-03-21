@@ -68,7 +68,7 @@ class _SnoozeAndTurnOffAlarmPageWithoutMissionState extends State<SnoozeAndTurnO
 
           ////// 알람 미루기, 알람 끄기 버튼
           Container(
-              padding: EdgeInsets.only(bottom:20),
+              padding: EdgeInsets.only(bottom:40),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
