@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:orange_alarm/page/BarcodeScanMission.dart';
 import 'SolveArithmeticMission.dart';
@@ -19,10 +20,15 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
   late TimeOfDay _currentTime;
   late Timer _timer;
 
+  List<String> changeAlarmOffMission = ['바코드 찍기', '수학 문제 풀기'];
+  String? selectedChangeAlarmOffMission;
+  // 알람 생성 및 알람 수정 시 선택한 알람 끄기 미션 정보 전달.
+
   @override
   void initState() {
     super.initState();
     _currentTime = TimeOfDay.now();
+    selectedChangeAlarmOffMission = widget.alarmOffMission;
     _startTimer();
   }
 
@@ -43,12 +49,6 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
     _timer.cancel();
     super.dispose();
   }
-
-
-
-  List<String> changeAlarmOffMission = ['바코드 찍기', '수학 문제 풀기'];
-  late String selectedChangeAlarmOffMission = widget.alarmOffMission;
-  // 알람 생성 및 알람 수정 시 선택한 알람 끄기 미션 정보 전달.
 
   @override
   Widget build(BuildContext context) {
@@ -147,17 +147,17 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 5, right: 10),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               ///// 수학 문제 풀기
                               if(selectedChangeAlarmOffMission == '수학 문제 풀기') {
-                                Navigator.push(
+                                await Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
                                 );
                               }
                               ///// 바코드 찍기
                               else if(selectedChangeAlarmOffMission == '바코드 찍기') {
-                                BarcodeScanMission().barcodeScan(context);
+                                await BarcodeScanMission().barcodeScan(context);
                               }
                               Navigator.pop(context);
                             },

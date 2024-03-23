@@ -66,6 +66,8 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
   late String _selectedAlarmOffMission = widget.alarmSettingData.selectedAlarmOffMission;  // 알람 끄기 미션
 
+  late AudioPlayer player;
+
   @override
   void initState() {
     super.initState();
@@ -82,6 +84,8 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
     _checkNowTime();
     _triggerAlarm ();
+
+    player = AudioPlayer();
   }
 
   // 1초 간격으로 현재 시간을 now에 저장
@@ -126,6 +130,8 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
       else if(_countAgain == 0) {
         // 알람음 재생
         _playAlarmSound();
+
+
 
         Navigator.push(
           context,
@@ -229,14 +235,26 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         });
       }
     }
+    else if(chosenWeekdays(widget.alarmSettingData.weekdays) == '반복 없음' && checkSelectedTimeHourResult && checkSelectedTimeMinuteResult) {
+      _timerForPeriodicCheck.cancel();
+      _ringAlarm();
+
+      if(_selectedAlarmRingAgain != '사용 안 함') {
+        _timerForAlarmAgain = Timer.periodic(Duration(minutes: _intervalAgain), (Timer timer) {
+          _ringAlarm();
+        });
+      }
+
+      if(_countAgain == 0) {
+        _timerForPeriodicCheck.cancel();
+        _timerForCheckCurrentTime.cancel();
+      }
+    }
   }
 
-
-  AudioPlayer player = AudioPlayer();
-
-  void _playAlarmSound() {
+  void _playAlarmSound() async {
     if (_selectedAlarmBell == '알람음1') {
-      player.setAsset('assets/alarm_sound_1.mp3');
+      await player.setAsset('./assets/alarm_sound_1.mp3');
 
       player.load();
       for (int i = 0; i < 30; i++) {
@@ -244,7 +262,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
       }
     }
     else if(_selectedAlarmBell == '알람음2') {
-      player.setAsset('assets/alarm_sound_2.mp3');
+      await player.setAsset('./assets/alarm_sound_2.mp3');
 
       player.load();
       for (int i = 0; i < 30; i++) {
@@ -287,6 +305,13 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
             )
           ),
         );
+
+        // _timerForCheckCurrentTime.cancel();
+        // _timerForPeriodicCheck.cancel();
+        // _timerForAlarmAgain.cancel();
+        //
+        // _checkNowTime();
+        // _triggerAlarm ();
       },
       child : Container(
         key: widget.key,
