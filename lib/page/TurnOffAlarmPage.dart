@@ -6,9 +6,11 @@ import 'SolveArithmeticMission.dart';
 
 class TurnOffAlarmPage extends StatefulWidget {
   final String alarmOffMission;
+  final Function() stopAlarmSound;
 
   TurnOffAlarmPage({
     required this.alarmOffMission,
+    required this.stopAlarmSound,
   });
 
   @override
@@ -126,12 +128,12 @@ class _TurnOffAlarmPageState extends State<TurnOffAlarmPage> {
                   if(selectedChangeAlarmOffMission == '수학 문제 풀기') {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage()),
+                      MaterialPageRoute(builder: (context) => SolveArithmeticMissionPage(stopAlarmSound: widget.stopAlarmSound())),
                     );
                   }
                   ///// 바코드 찍기
                   else if(selectedChangeAlarmOffMission == '바코드 찍기') {
-                    BarcodeScanMission().barcodeScan(context);
+                    BarcodeScanMission(stopAlarmSound: widget.stopAlarmSound()).barcodeScan(context);
                   }
                   Navigator.pop(context);
                 },

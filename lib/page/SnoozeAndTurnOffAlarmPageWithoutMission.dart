@@ -5,6 +5,12 @@ import 'SolveArithmeticMission.dart';
 
 
 class SnoozeAndTurnOffAlarmPageWithoutMission extends StatefulWidget {
+  final Function() stopAlarmSound;
+
+  SnoozeAndTurnOffAlarmPageWithoutMission({
+    required this.stopAlarmSound,
+  });
+
   @override
   _SnoozeAndTurnOffAlarmPageWithoutMissionState createState() => _SnoozeAndTurnOffAlarmPageWithoutMissionState();
 }
@@ -95,6 +101,7 @@ class _SnoozeAndTurnOffAlarmPageWithoutMissionState extends State<SnoozeAndTurnO
                           padding: EdgeInsets.only(left: 5, right: 10),
                           child: ElevatedButton(
                             onPressed: () {
+                              widget.stopAlarmSound();
                               Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(

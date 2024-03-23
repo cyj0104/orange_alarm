@@ -3,6 +3,12 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 
 class BarcodeScanMission {
+  final Function() stopAlarmSound;
+
+  BarcodeScanMission({
+    required this.stopAlarmSound,
+  });
+
   Future<void> barcodeScan(BuildContext context) async {
     String barcodeScanRes;
 
@@ -16,6 +22,8 @@ class BarcodeScanMission {
     } catch (e) {
       barcodeScanRes = 'Failed to get platform version.';
     }
+
+    stopAlarmSound();
 
     // ScaffoldMessenger.of(context).showSnackBar(
     //   SnackBar(

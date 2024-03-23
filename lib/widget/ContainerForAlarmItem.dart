@@ -2,7 +2,7 @@ import "dart:async";
 import "dart:io";
 
 import "package:flutter/material.dart";
-import "package:just_audio/just_audio.dart";
+import 'package:audioplayers/audioplayers.dart';
 
 import "../data/AlarmSettingData.dart";
 import "../page/ModifyAlarmPage.dart";
@@ -126,11 +126,11 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
           MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPage(
             // 타이머 해제할 수 있도록, 타이머 객체 전달
             alarmOffMission: _selectedAlarmOffMission,
+            // 미션 성공하면 알람음 중지할 수 있도록 알람음 정지 함수 전달
+            stopAlarmSound: _stopAlarmSound
           )),
         );
 
-        // 알람음 중지
-        _stopAlarmSound();
       }
 
       // 반복 횟수가 남지 않았다면,
@@ -145,11 +145,9 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
           MaterialPageRoute(builder: (context) =>
               TurnOffAlarmPage(
                 alarmOffMission: _selectedAlarmOffMission,
+                stopAlarmSound: _stopAlarmSound
               )),
         );
-
-        // 알람음 중지
-        _stopAlarmSound();
 
         // 현재 시간이 맞는지 다시 체크 시작
         sleep(Duration(seconds: 35));
@@ -158,7 +156,6 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
           _timerForAlarmAgain.cancel();
         }
       }
-
     }
 
     // 알람 끄기 미션 선택 안했다면,
@@ -171,11 +168,10 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPageWithoutMission()),
+          MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPageWithoutMission(
+              stopAlarmSound: _stopAlarmSound
+          )),
         );
-
-        // 알람음 중지
-        _stopAlarmSound();
       }
 
       // 반복 횟수가 남지 않았다면,
@@ -185,11 +181,10 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TurnOffAlarmPageWithoutMission()),
+          MaterialPageRoute(builder: (context) => TurnOffAlarmPageWithoutMission(
+              stopAlarmSound: _stopAlarmSound,
+          )),
         );
-
-        // 알람음 중지
-        _stopAlarmSound();
 
         // 현재 시간이 맞는지 다시 체크 시작
         sleep(Duration(seconds: 35));
@@ -259,22 +254,13 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
     }
   }
 
-  void _playAlarmSound() async {
+  void _playAlarmSound() {
+    player.setReleaseMode(ReleaseMode.loop);
     if (_selectedAlarmBell == '알람음1') {
-      await player.setAsset('./assets/alarm_sound_1.mp3');
-
-      player.load();
-      for (int i = 0; i < 30; i++) {
-        player.play();
-      }
+      player.play(AssetSource('alarm_sound_1.mp3'));
     }
     else if(_selectedAlarmBell == '알람음2') {
-      await player.setAsset('./assets/alarm_sound_2.mp3');
-
-      player.load();
-      for (int i = 0; i < 30; i++) {
-        player.play();
-      }
+      player.play(AssetSource('alarm_sound_2.mp3'));
     }
   }
 
@@ -292,6 +278,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
     _timerForCheckCurrentTime.cancel();
     _timerForPeriodicCheck.cancel();
     _timerForAlarmAgain.cancel();
+    player.dispose();
   }
 
 

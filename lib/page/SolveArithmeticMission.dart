@@ -2,6 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class SolveArithmeticMissionPage extends StatefulWidget {
+  final Function() stopAlarmSound;
+
+  SolveArithmeticMissionPage({
+    required this.stopAlarmSound,
+  });
+
   @override
   _SolveArithmeticMissionPageState createState() => _SolveArithmeticMissionPageState();
 }
@@ -40,6 +46,7 @@ class _SolveArithmeticMissionPageState extends State<SolveArithmeticMissionPage>
   void checkAnswer() {
     setState(() {
       if (correctAnswer.toString() == userAnswer) {
+        widget.stopAlarmSound();
         Navigator.pop(context);
       }
       else {
