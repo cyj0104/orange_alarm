@@ -132,6 +132,7 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                           padding: EdgeInsets.only(left:10, right: 5),
                           child: ElevatedButton(
                             onPressed: () {
+                              widget.stopAlarmSound();
                               Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
