@@ -43,6 +43,13 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
   void _modifiedAlarmData(AlarmSettingData alarmSettingData) {
     setState(() {
       widget.alarmSettingData = alarmSettingData;
+
+      _timerForCheckCurrentTime.cancel();
+      _timerForPeriodicCheck.cancel();
+      _timerForAlarmAgain.cancel();
+
+      _checkNowTime();
+      _triggerAlarm ();
     });
   }
 
@@ -305,13 +312,6 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
             )
           ),
         );
-
-        // _timerForCheckCurrentTime.cancel();
-        // _timerForPeriodicCheck.cancel();
-        // _timerForAlarmAgain.cancel();
-        //
-        // _checkNowTime();
-        // _triggerAlarm ();
       },
       child : Container(
         key: widget.key,
