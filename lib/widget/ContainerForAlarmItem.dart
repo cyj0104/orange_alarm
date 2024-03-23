@@ -73,7 +73,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
   late String _selectedAlarmOffMission = widget.alarmSettingData.selectedAlarmOffMission;  // 알람 끄기 미션
 
-  late AudioPlayer player;
+  AudioPlayer player = AudioPlayer();
 
   @override
   void initState() {
@@ -91,8 +91,6 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
 
     _checkNowTime();
     _triggerAlarm ();
-
-    player = AudioPlayer();
   }
 
   // 1초 간격으로 현재 시간을 now에 저장
@@ -103,6 +101,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
   }
 
   void _triggerAlarm () {
+    _checkAlarmDateSetting();
     _timerForPeriodicCheck = Timer.periodic(Duration(seconds: 30), (Timer timer) {
       _checkAlarmDateSetting();
     });
