@@ -20,19 +20,6 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
-      // builder: (BuildContext context, Widget? child) {
-      //   return Theme(
-      //     data: ThemeData.light().copyWith(
-      //       primaryColor: Colors.orange, // 주황색으로 설정
-      //       hintColor: Colors.orange, // 주황색으로 설정
-      //       colorScheme: ColorScheme.light(primary: Colors.orange), // 주황색으로 설정
-      //       buttonTheme: ButtonThemeData(
-      //         textTheme: ButtonTextTheme.primary, // 버튼 텍스트 색상을 기본 텍스트 색상으로 설정
-      //       ),
-      //     ),
-      //     child: child!,
-      //   );
-      // },
     );
     if (picked != null && picked != _selectedTime) {
       setState(() {
