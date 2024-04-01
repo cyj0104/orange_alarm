@@ -44,6 +44,24 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
     setState(() {
       widget.alarmSettingData = alarmSettingData;
 
+      // 데이터 갱신
+      _selectedTime = widget.alarmSettingData.selectedTime;   // 설정한 시간
+      _selectedWeekdays = widget.alarmSettingData.weekdays;  // 반복 요일
+      _selectedAlarmBell = widget.alarmSettingData.selectedAlarmBell;  // 알림음
+      _selectedAlarmRingAgain = widget.alarmSettingData.selectedAlarmRingAgain;   // 반복 간격, 횟수
+      _selectedAlarmOffMission = widget.alarmSettingData.selectedAlarmOffMission;
+
+      if(_selectedAlarmRingAgain != '사용 안 함') {
+        _parts = _selectedAlarmRingAgain.split(',');
+        _intervalAgain = int.parse(_parts[0].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 간격
+        _countAgain = int.parse(_parts[1].replaceAll(RegExp(r'[^\d]'), ''));  // 반복 횟수
+      }
+      else {
+        _intervalAgain = 0;
+        _countAgain = 1;
+      }
+
+      // 알람 활성화 버튼 true인지 확인
       if (switchButton) {
         _timerForCheckCurrentTime.cancel();
         _timerForPeriodicCheck.cancel();
