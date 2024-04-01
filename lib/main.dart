@@ -4,7 +4,9 @@ import 'package:orange_alarm/page/HomePage.dart';
 
 void main() {
   runApp(
-    MaterialApp(
-        home: Homepage())
+      MaterialApp(
+        home: Homepage(),
+        debugShowCheckedModeBanner: false,
+      )
     );
 }
