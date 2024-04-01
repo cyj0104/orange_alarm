@@ -8,10 +8,12 @@ import 'SolveArithmeticMission.dart';
 class SnoozeAndTurnOffAlarmPage extends StatefulWidget {
   final String alarmOffMission;
   final Function() stopAlarmSound;
+  final Function() stopTimerForAlarmAgain;
 
   SnoozeAndTurnOffAlarmPage({
     required this.alarmOffMission,
     required this.stopAlarmSound,
+    required this.stopTimerForAlarmAgain,
   });
 
   @override
@@ -162,6 +164,8 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
                               else if(selectedChangeAlarmOffMission == '바코드 찍기') {
                                 await BarcodeScanMission(stopAlarmSound: widget.stopAlarmSound).barcodeScan(context);
                               }
+                              widget.stopAlarmSound();
+                              widget.stopTimerForAlarmAgain();
                               Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(

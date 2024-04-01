@@ -127,8 +127,10 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
           MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPage(
             // 타이머 해제할 수 있도록, 타이머 객체 전달
             alarmOffMission: _selectedAlarmOffMission,
-            // 미션 성공하면 알람음 중지할 수 있도록 알람음 정지 함수 전달
-            stopAlarmSound: _stopAlarmSound
+            // 알람 미루기 & 끄기 시 알람음 중지할 수 있도록 알람음 정지 함수 전달
+            stopAlarmSound: _stopAlarmSound,
+            // 알람 끄기 시 타이머 중지할 수 있도록 함수 전달
+            stopTimerForAlarmAgain: _stopTimerForAlarmAgain,
           )),
         );
 
@@ -151,7 +153,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         );
 
         // 현재 시간이 맞는지 다시 체크 시작
-        sleep(Duration(seconds: 35));
+        //sleep(Duration(seconds: 5));
         _triggerAlarm ();
         if(_selectedAlarmRingAgain != '사용 안 함') {
           _timerForAlarmAgain.cancel();
@@ -170,7 +172,8 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SnoozeAndTurnOffAlarmPageWithoutMission(
-              stopAlarmSound: _stopAlarmSound
+            stopAlarmSound: _stopAlarmSound,
+            stopTimerForAlarmAgain: _stopTimerForAlarmAgain,
           )),
         );
       }
@@ -188,7 +191,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         );
 
         // 현재 시간이 맞는지 다시 체크 시작
-        sleep(Duration(seconds: 35));
+        //sleep(Duration(seconds: 35));
         _triggerAlarm ();
         _timerForAlarmAgain.cancel();
       }
@@ -272,6 +275,9 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
   }
 
 
+  void _stopTimerForAlarmAgain() {
+    _timerForAlarmAgain.cancel();
+  }
 
   @override
   void dispose() {
