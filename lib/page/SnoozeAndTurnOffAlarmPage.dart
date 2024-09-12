@@ -25,7 +25,7 @@ class _SnoozeAndTurnOffAlarmPageState extends State<SnoozeAndTurnOffAlarmPage> {
   late Timer _timer;
 
   List<String> changeAlarmOffMission = ['바코드 찍기', '수학 문제 풀기'];
-  String? selectedChangeAlarmOffMission;
+  late String selectedChangeAlarmOffMission;
   // 알람 생성 및 알람 수정 시 선택한 알람 끄기 미션 정보 전달.
 
   @override
