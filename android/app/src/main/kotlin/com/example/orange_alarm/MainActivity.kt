@@ -1,4 +1,4 @@
-package com.example.orange_alarm
+package com.first.orange_alarm
 
 import io.flutter.embedding.android.FlutterActivity
 
