@@ -1,0 +1,293 @@
+@startuml OrangeAlarm Class Diagram
+
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+' ===== Entry Point =====
+package "main" #MistyRose {
+    class main {
+        + main(): void
+    }
+    note right of main
+      runApp(MaterialApp(
+        home: Homepage()
+      ))
+    end note
+}
+
+' ===== Flutter Framework =====
+package "Flutter Framework" #LightGray {
+    abstract class StatefulWidget
+    abstract class "State<T>" as State
+}
+
+' ===== Data =====
+package "data" #LightYellow {
+    class AlarmSettingData {
+        + selectedTime: TimeOfDay
+        + convertToStringSelectedTime: String
+        + weekdays: Map<String, bool>
+        + selectedAlarmBell: String
+        + selectedAlarmRingAgain: String
+        + selectedAlarmOffMission: String
+        --
+        + AlarmSettingData(selectedTime, weekdays,\n  selectedAlarmBell, selectedAlarmRingAgain,\n  selectedAlarmOffMission)
+    }
+}
+
+' ===== Widget =====
+package "widget" #LightCyan {
+    class ContainerForAlarmItem {
+        + key: Key
+        + onRemove: Function(Key)
+        + alarmSettingData: AlarmSettingData
+        --
+        + createState(): _ContainerForAlarmItemState
+    }
+
+    class _ContainerForAlarmItemState {
+        - switchButton: bool
+        - _timerForCheckCurrentTime: Timer
+        - _timerForPeriodicCheck: Timer
+        - _timerForAlarmAgain: Timer
+        - now: DateTime
+        - _selectedTime: TimeOfDay
+        - _selectedWeekdays: Map<String, bool>
+        - _selectedAlarmBell: String
+        - _selectedAlarmRingAgain: String
+        - _intervalAgain: int
+        - _countAgain: int
+        - _selectedAlarmOffMission: String
+        - player: AudioPlayer
+        --
+        + chosenWeekdays(Map<String, bool>): String
+        - _modifiedAlarmData(AlarmSettingData): void
+        - _checkNowTime(): void
+        - _triggerAlarm(): void
+        - _ringAlarm(): void
+        - _checkAlarmDateSetting(): void
+        - _playAlarmSound(): void
+        - _stopAlarmSound(): void
+        - _stopTimerForAlarmAgain(): void
+        + initState(): void
+        + dispose(): void
+        + build(BuildContext): Widget
+    }
+}
+
+' ===== Pages =====
+package "page" #LightGreen {
+
+    class Homepage {
+        --
+        + createState(): _HomepageState
+    }
+
+    class _HomepageState {
+        - alarmList: List<Widget>
+        --
+        - _addAlarm(AlarmSettingData): void
+        - _removeAlarm(Key): void
+        + build(BuildContext): Widget
+    }
+
+    class NewAlarmPage {
+        + addAlarm: Function(AlarmSettingData)
+        --
+        + createState(): _NewAlarmPageState
+    }
+
+    class _NewAlarmPageState {
+        - _selectedTime: TimeOfDay
+        - weekdays: Map<String, bool>
+        - alarmBell: List<String>
+        - selectedAlarmBell: String
+        - alarmRingAgain: List<String>
+        - selectedAlarmRingAgain: String
+        - alarmOffMission: List<String>
+        - selectedAlarmOffMission: String
+        --
+        - _selectTime(BuildContext): Future<void>
+        - _alarmSettingData(): AlarmSettingData
+        + build(BuildContext): Widget
+    }
+
+    class ModifyAlarmPage {
+        + alarmSettingData: AlarmSettingData
+        + modifiedAlarmData: Function(AlarmSettingData)
+        --
+        + createState(): _ModifyAlarmPageState
+    }
+
+    class _ModifyAlarmPageState {
+        - _selectedTime: TimeOfDay
+        - weekdays: Map<String, bool>
+        - alarmBell: List<String>
+        - selectedAlarmBell: String
+        - alarmRingAgain: List<String>
+        - selectedAlarmRingAgain: String
+        - alarmOffMission: List<String>
+        - selectedAlarmOffMission: String
+        --
+        - _selectTime(BuildContext): Future<void>
+        - _alarmSettingData(): AlarmSettingData
+        + build(BuildContext): Widget
+    }
+
+    class SnoozeAndTurnOffAlarmPage {
+        + alarmOffMission: String
+        + stopAlarmSound: Function()
+        + stopTimerForAlarmAgain: Function()
+        --
+        + createState(): _SnoozeAndTurnOffAlarmPageState
+    }
+
+    class _SnoozeAndTurnOffAlarmPageState {
+        - _currentTime: TimeOfDay
+        - _timer: Timer
+        - changeAlarmOffMission: List<String>
+        - selectedChangeAlarmOffMission: String
+        --
+        - _startTimer(): void
+        + initState(): void
+        + dispose(): void
+        + build(BuildContext): Widget
+    }
+
+    class SnoozeAndTurnOffAlarmPageWithoutMission {
+        + stopAlarmSound: Function()
+        + stopTimerForAlarmAgain: Function()
+        --
+        + createState(): _SnoozeAndTurnOffAlarmPageWithoutMissionState
+    }
+
+    class _SnoozeAndTurnOffAlarmPageWithoutMissionState {
+        - _currentTime: TimeOfDay
+        - _timer: Timer
+        --
+        - _startTimer(): void
+        + initState(): void
+        + dispose(): void
+        + build(BuildContext): Widget
+    }
+
+    class TurnOffAlarmPage {
+        + alarmOffMission: String
+        + stopAlarmSound: Function()
+        --
+        + createState(): _TurnOffAlarmPageState
+    }
+
+    class _TurnOffAlarmPageState {
+        - _currentTime: TimeOfDay
+        - _timer: Timer
+        - changeAlarmOffMission: List<String>
+        - selectedChangeAlarmOffMission: String
+        --
+        - _startTimer(): void
+        + initState(): void
+        + dispose(): void
+        + build(BuildContext): Widget
+    }
+
+    class TurnOffAlarmPageWithoutMission {
+        + stopAlarmSound: Function()
+        --
+        + createState(): _TurnOffAlarmPageWithoutMissionState
+    }
+
+    class _TurnOffAlarmPageWithoutMissionState {
+        - _currentTime: TimeOfDay
+        - _timer: Timer
+        --
+        - _startTimer(): void
+        + initState(): void
+        + dispose(): void
+        + build(BuildContext): Widget
+    }
+
+    class BarcodeScanMission {
+        + stopAlarmSound: Function()
+        --
+        + BarcodeScanMission(stopAlarmSound)
+        + barcodeScan(BuildContext): Future<void>
+    }
+
+    class SolveArithmeticMissionPage {
+        + stopAlarmSound: Function()
+        --
+        + createState(): _SolveArithmeticMissionPageState
+    }
+
+    class _SolveArithmeticMissionPageState {
+        - randomNumber1: int
+        - randomNumber2: int
+        - correctAnswer: int
+        - userAnswer: String
+        --
+        + attachNumber(String): void
+        + toggleSign(): void
+        + checkAnswer(): void
+        + build(BuildContext): Widget
+    }
+}
+
+' ===== main 진입점 =====
+main ..> Homepage : creates
+
+' ===== 상속 관계 (StatefulWidget) =====
+StatefulWidget <|-- Homepage
+StatefulWidget <|-- NewAlarmPage
+StatefulWidget <|-- ModifyAlarmPage
+StatefulWidget <|-- ContainerForAlarmItem
+StatefulWidget <|-- SnoozeAndTurnOffAlarmPage
+StatefulWidget <|-- SnoozeAndTurnOffAlarmPageWithoutMission
+StatefulWidget <|-- TurnOffAlarmPage
+StatefulWidget <|-- TurnOffAlarmPageWithoutMission
+StatefulWidget <|-- SolveArithmeticMissionPage
+
+' ===== State 관계 =====
+State <|-- _HomepageState
+State <|-- _NewAlarmPageState
+State <|-- _ModifyAlarmPageState
+State <|-- _ContainerForAlarmItemState
+State <|-- _SnoozeAndTurnOffAlarmPageState
+State <|-- _SnoozeAndTurnOffAlarmPageWithoutMissionState
+State <|-- _TurnOffAlarmPageState
+State <|-- _TurnOffAlarmPageWithoutMissionState
+State <|-- _SolveArithmeticMissionPageState
+
+' ===== Widget <-> State 연결 =====
+Homepage ..> _HomepageState : creates
+NewAlarmPage ..> _NewAlarmPageState : creates
+ModifyAlarmPage ..> _ModifyAlarmPageState : creates
+ContainerForAlarmItem ..> _ContainerForAlarmItemState : creates
+SnoozeAndTurnOffAlarmPage ..> _SnoozeAndTurnOffAlarmPageState : creates
+SnoozeAndTurnOffAlarmPageWithoutMission ..> _SnoozeAndTurnOffAlarmPageWithoutMissionState : creates
+TurnOffAlarmPage ..> _TurnOffAlarmPageState : creates
+TurnOffAlarmPageWithoutMission ..> _TurnOffAlarmPageWithoutMissionState : creates
+SolveArithmeticMissionPage ..> _SolveArithmeticMissionPageState : creates
+
+' ===== 데이터 의존성 =====
+ContainerForAlarmItem o-- AlarmSettingData : holds
+ModifyAlarmPage o-- AlarmSettingData : receives
+_NewAlarmPageState ..> AlarmSettingData : creates
+_ModifyAlarmPageState ..> AlarmSettingData : creates
+
+' ===== 네비게이션 (페이지 전환) =====
+_HomepageState ..> NewAlarmPage : navigates to
+_HomepageState ..> ContainerForAlarmItem : creates
+_ContainerForAlarmItemState ..> ModifyAlarmPage : navigates to
+_ContainerForAlarmItemState ..> SnoozeAndTurnOffAlarmPage : navigates to\n[미션O, 반복O]
+_ContainerForAlarmItemState ..> TurnOffAlarmPage : navigates to\n[미션O, 반복X]
+_ContainerForAlarmItemState ..> SnoozeAndTurnOffAlarmPageWithoutMission : navigates to\n[미션X, 반복O]
+_ContainerForAlarmItemState ..> TurnOffAlarmPageWithoutMission : navigates to\n[미션X, 반복X]
+
+_SnoozeAndTurnOffAlarmPageState ..> SolveArithmeticMissionPage : navigates to
+_SnoozeAndTurnOffAlarmPageState ..> BarcodeScanMission : uses
+_TurnOffAlarmPageState ..> SolveArithmeticMissionPage : navigates to
+_TurnOffAlarmPageState ..> BarcodeScanMission : uses
+
+@enduml
