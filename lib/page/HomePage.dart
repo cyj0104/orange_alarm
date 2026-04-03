@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:orange_alarm/data/AlarmSettingData.dart";
 import "package:orange_alarm/page/NewAlarmPage.dart";
-import "../widget/ContainerForAlarmItem.dart";
+import "../widget/AlarmCard.dart";
 
 class Homepage extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _HomepageState extends State<Homepage> {
       body: ListView(
         padding: EdgeInsets.only(top:10, bottom: 150),
         children: alarmList.asMap().entries.map((entry) =>
-          ContainerForAlarmItem(
+          AlarmCard(
             key: ValueKey(entry.key),
             onRemove: () => _removeAlarm(entry.key),
             alarmSettingData: entry.value,
