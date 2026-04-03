@@ -29,15 +29,19 @@ class _TurnOffAlarmPageState extends State<TurnOffAlarmPage> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1),(Timer timer) {
-      TimeOfDay newTime = TimeOfDay.now();
-      if (_currentTime.hour != newTime.hour || _currentTime.minute != newTime.minute) {
+    final now = DateTime.now();
+    final msUntilNextMinute = (60 - now.second) * 1000 - now.millisecond;
+
+    _timer = Timer(Duration(milliseconds: msUntilNextMinute), () {
+      setState(() {
+        _currentTime = TimeOfDay.now();
+      });
+      _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
         setState(() {
-          _currentTime = newTime;
+          _currentTime = TimeOfDay.now();
         });
-      }
-    }
-    );
+      });
+    });
   }
 
   @override
