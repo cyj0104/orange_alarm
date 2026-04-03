@@ -40,8 +40,7 @@ package "data" #LightYellow {
 ' ===== Widget =====
 package "widget" #LightCyan {
     class ContainerForAlarmItem {
-        + key: Key
-        + onRemove: Function(Key)
+        + onRemove: Function()
         + alarmSettingData: AlarmSettingData
         --
         + createState(): _ContainerForAlarmItemState
@@ -86,10 +85,10 @@ package "page" #LightGreen {
     }
 
     class _HomepageState {
-        - alarmList: List<Widget>
+        - alarmList: List<AlarmSettingData>
         --
         - _addAlarm(AlarmSettingData): void
-        - _removeAlarm(Key): void
+        - _removeAlarm(int index): void
         + build(BuildContext): Widget
     }
 
@@ -273,12 +272,13 @@ SolveArithmeticMissionPage ..> _SolveArithmeticMissionPageState : creates
 ' ===== 데이터 의존성 =====
 ContainerForAlarmItem o-- AlarmSettingData : holds
 ModifyAlarmPage o-- AlarmSettingData : receives
+_HomepageState o-- AlarmSettingData : stores list
 _NewAlarmPageState ..> AlarmSettingData : creates
 _ModifyAlarmPageState ..> AlarmSettingData : creates
 
 ' ===== 네비게이션 (페이지 전환) =====
 _HomepageState ..> NewAlarmPage : navigates to
-_HomepageState ..> ContainerForAlarmItem : creates
+_HomepageState ..> ContainerForAlarmItem : creates in build()
 _ContainerForAlarmItemState ..> ModifyAlarmPage : navigates to
 _ContainerForAlarmItemState ..> SnoozeAndTurnOffAlarmPage : navigates to\n[미션O, 반복O]
 _ContainerForAlarmItemState ..> TurnOffAlarmPage : navigates to\n[미션O, 반복X]
