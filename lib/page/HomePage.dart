@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:orange_alarm/data/AlarmSettingData.dart";
 import "package:orange_alarm/page/NewAlarmPage.dart";
-import "../widget/AlarmCard.dart";
+import "../component/AlarmCard.dart";
 
 class Homepage extends StatefulWidget {
   @override
