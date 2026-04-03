@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:orange_alarm/page/BarcodeScanMission.dart';
-import 'SolveArithmeticMission.dart';
+import 'package:orange_alarm/mission/BarcodeScanMission.dart';
+import 'package:orange_alarm/mission/SolveArithmeticMission.dart';
 
 
 class SnoozeAndTurnOffAlarmPage extends StatefulWidget {

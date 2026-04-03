@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'BarcodeScanMission.dart';
-import 'SolveArithmeticMission.dart';
+import 'package:orange_alarm/mission/BarcodeScanMission.dart';
+import 'package:orange_alarm/mission/SolveArithmeticMission.dart';
 
 
 class TurnOffAlarmPage extends StatefulWidget {

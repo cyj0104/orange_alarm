@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:orange_alarm/page/BarcodeScanMission.dart';
-import 'SolveArithmeticMission.dart';
 
 
 class SnoozeAndTurnOffAlarmPageWithoutMission extends StatefulWidget {
