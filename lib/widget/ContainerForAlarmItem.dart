@@ -12,17 +12,15 @@ import "../page/TurnOffAlarmPage.dart";
 import "../page/TurnOffAlarmPageWithoutMission.dart";
 
 class ContainerForAlarmItem extends StatefulWidget {
-  @override
-  final Key key;
-  final Function(Key) onRemove;
+  final Function() onRemove;
 
   AlarmSettingData alarmSettingData;
 
   ContainerForAlarmItem({
-    required this.key,
+    super.key,
     required this.onRemove,
     required this.alarmSettingData,
-  }): super(key: key);
+  });
 
   @override
   _ContainerForAlarmItemState createState() =>  _ContainerForAlarmItemState();
@@ -326,7 +324,6 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
         );
       },
       child : Container(
-        key: widget.key,
         margin: EdgeInsets.only(top: 10, left: 10, right: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
@@ -376,7 +373,7 @@ class _ContainerForAlarmItemState extends State<ContainerForAlarmItem> {
                   IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      widget.onRemove(widget.key);
+                      widget.onRemove();
                     },
                   ),
                 ],

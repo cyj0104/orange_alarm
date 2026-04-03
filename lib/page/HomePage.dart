@@ -9,23 +9,17 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Widget> alarmList = [];
+  List<AlarmSettingData> alarmList = [];
 
   void _addAlarm(AlarmSettingData alarmSettingData) {
     setState(() {
-      alarmList.add(
-        ContainerForAlarmItem(
-          key: UniqueKey(),
-          onRemove: _removeAlarm,
-          alarmSettingData: alarmSettingData,
-        ),
-      );
+      alarmList.add(alarmSettingData);
     });
   }
 
-  void _removeAlarm(Key key) {
+  void _removeAlarm(int index) {
     setState(() {
-      alarmList.removeWhere((containerForAlarmItem) => (containerForAlarmItem.key) == key);
+      alarmList.removeAt(index);
     });
   }
 
@@ -39,9 +33,13 @@ class _HomepageState extends State<Homepage> {
       ),
       body: ListView(
         padding: EdgeInsets.only(top:10, bottom: 150),
-        children: [
-          ...alarmList,
-        ]
+        children: alarmList.asMap().entries.map((entry) =>
+          ContainerForAlarmItem(
+            key: ValueKey(entry.key),
+            onRemove: () => _removeAlarm(entry.key),
+            alarmSettingData: entry.value,
+          )
+        ).toList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
