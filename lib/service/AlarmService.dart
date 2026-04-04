@@ -8,8 +8,6 @@ class AlarmService {
 
   Timer _timerForPeriodicCheck = Timer(Duration.zero, () {});
   Timer _timerForAlarmAgain = Timer(Duration.zero, () {});
-  Timer _timerForCheckCurrentTime = Timer(Duration.zero, () {});
-  DateTime _now = DateTime.now();
 
   late int _intervalAgain;
   late int _countAgain;
@@ -35,12 +33,10 @@ class AlarmService {
   }
 
   void start() {
-    _checkNowTime();
     _triggerAlarm();
   }
 
   void stop() {
-    _timerForCheckCurrentTime.cancel();
     _timerForPeriodicCheck.cancel();
     _timerForAlarmAgain.cancel();
   }
@@ -73,12 +69,6 @@ class AlarmService {
 
   void stopTimerForAlarmAgain() {
     _timerForAlarmAgain.cancel();
-  }
-
-  void _checkNowTime() {
-    _timerForCheckCurrentTime = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _now = DateTime.now();
-    });
   }
 
   void _triggerAlarm() {
@@ -116,11 +106,12 @@ class AlarmService {
       DateTime.saturday: '토',
       DateTime.sunday: '일',
     };
-    final today = weekdayMap[_now.weekday]!;
+    final now = DateTime.now();
+    final today = weekdayMap[now.weekday]!;
 
     final bool checkWeekday = alarmSettingData.weekdays[today] == true;
-    final bool checkHour = _now.hour == alarmSettingData.selectedTime.hour;
-    final bool checkMinute = _now.minute == alarmSettingData.selectedTime.minute;
+    final bool checkHour = now.hour == alarmSettingData.selectedTime.hour;
+    final bool checkMinute = now.minute == alarmSettingData.selectedTime.minute;
     final bool noRepeatDay = !alarmSettingData.weekdays.values.contains(true);
 
     if ((checkWeekday || noRepeatDay) && checkHour && checkMinute) {
@@ -134,7 +125,7 @@ class AlarmService {
       }
 
       if (noRepeatDay && _countAgain == 0) {
-        _timerForCheckCurrentTime.cancel();
+        stop();
       }
     }
   }
