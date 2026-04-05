@@ -1,0 +1,131 @@
+@startuml OrangeAlarm Widget Tree
+
+skinparam defaultFontSize 13
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+skinparam rectangle {
+  BackgroundColor LightYellow
+  BorderColor Gray
+}
+
+' ===== HomePage =====
+package "HomePage" #LightGreen {
+  rectangle "Scaffold" {
+    rectangle "AppBar\n[알람]" as AppBar
+    rectangle "ListView" as ListView {
+      rectangle "AlarmCard (×n)" as AlarmCard {
+        rectangle "GestureDetector" as GD {
+          rectangle "Container" as CardContainer {
+            rectangle "Row" as CardRow {
+              rectangle "Padding" as LP {
+                rectangle "Column" as LC {
+                  rectangle "Text\n[시간]" as TimeText
+                  rectangle "Text\n[요일]" as DayText
+                }
+              }
+              rectangle "Padding" as RP {
+                rectangle "Column" as RC {
+                  rectangle "Switch" as Switch
+                  rectangle "IconButton\n[삭제]" as DeleteBtn
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    rectangle "FloatingActionButton\n[+]" as FAB
+  }
+}
+
+' ===== NewAlarmPage =====
+package "NewAlarmPage" #LightCyan {
+  rectangle "Scaffold " as NScaffold {
+    rectangle "AppBar\n[새 알람]" as NAppBar
+    rectangle "Column " as NColumn {
+      rectangle "GestureDetector\n[시간 선택]" as NTimePicker {
+        rectangle "Row " as NTimeRow {
+          rectangle "Text\n[AM/PM]" as NAMPM
+          rectangle "Text\n[HH:MM]" as NTime
+        }
+      }
+      rectangle "Row\n[요일 선택]" as NWeekRow {
+        rectangle "GestureDetector×7\n[일~토]" as NWeekdays
+      }
+      rectangle "Row\n[알림음]" as NBellRow {
+        rectangle "DropdownButton\n[무음/알람음1/알람음2]" as NBell
+      }
+      rectangle "Row\n[다시 울림]" as NRepeatRow {
+        rectangle "DropdownButton\n[사용안함/5분3회...]" as NRepeat
+      }
+      rectangle "Row\n[알람 끄기 미션]" as NMissionRow {
+        rectangle "DropdownButton\n[사용안함/바코드/수학]" as NMission
+      }
+      rectangle "Row\n[취소 / 저장]" as NButtons {
+        rectangle "ElevatedButton\n[취소]" as NCancel
+        rectangle "ElevatedButton\n[저장]" as NSave
+      }
+    }
+  }
+}
+
+' ===== SnoozeAndTurnOffAlarmPage =====
+package "SnoozeAndTurnOffAlarmPage" #LightPink {
+  rectangle "Scaffold  " as SScaffold {
+    rectangle "Column  " as SColumn {
+      rectangle "Row  \n[AM/PM  HH:MM]" as STimeRow
+      rectangle "DropdownButton \n[미션 선택]" as SMission
+      rectangle "Row  \n[알람 미루기 / 알람 끄기]" as SButtons {
+        rectangle "ElevatedButton \n[알람 미루기]" as SSnooze
+        rectangle "ElevatedButton \n[알람 끄기]" as STurnOff
+      }
+    }
+  }
+}
+
+' ===== TurnOffAlarmPage =====
+package "TurnOffAlarmPage" #Lavender {
+  rectangle "Scaffold   " as TScaffold {
+    rectangle "Column   " as TColumn {
+      rectangle "Row   \n[AM/PM  HH:MM]" as TTimeRow
+      rectangle "DropdownButton  \n[미션 선택]" as TMission
+      rectangle "ElevatedButton  \n[알람 끄기]" as TTurnOff
+    }
+  }
+}
+
+' ===== WithoutMission 페이지 =====
+package "SnoozeAndTurnOffAlarmPageWithoutMission\nTurnOffAlarmPageWithoutMission" #MistyRose {
+  rectangle "Scaffold    " as WScaffold {
+    rectangle "Column    " as WColumn {
+      rectangle "Row    \n[AM/PM  HH:MM]" as WTimeRow
+      rectangle "Row    \n[알람 미루기 / 알람 끄기]" as WButtons
+    }
+  }
+}
+
+' ===== SolveArithmeticMissionPage =====
+package "SolveArithmeticMissionPage" #PeachPuff {
+  rectangle "Scaffold     " as MScaffold {
+    rectangle "Column     " as MColumn {
+      rectangle "Text     \n[문제: n1 - n2]" as MQuestion
+      rectangle "Text     \n[= 답]" as MAnswer
+      rectangle "Row     \n[7  8  9]" as MRow1
+      rectangle "Row     \n[4  5  6]" as MRow2
+      rectangle "Row     \n[1  2  3]" as MRow3
+      rectangle "Row     \n[+/-  0  ⏎]" as MRow4
+    }
+  }
+}
+
+' ===== 네비게이션 =====
+FAB --> NScaffold : push
+GD --> "ModifyAlarmPage\n(NewAlarmPage와 동일한 구조)" : push
+AlarmCard --> SScaffold : push [미션O, 반복O]
+AlarmCard --> TScaffold : push [미션O, 반복X]
+AlarmCard --> WScaffold : push [미션X]
+STurnOff --> MScaffold : push [수학 문제]
+TTurnOff --> MScaffold : push [수학 문제]
+
+@enduml
