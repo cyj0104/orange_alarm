@@ -1,0 +1,93 @@
+@startwbs OrangeAlarm Widget State Info
+
+<style>
+wbsDiagram {
+  .stateful {
+    BackgroundColor LightCoral
+    FontColor Black
+  }
+  .stateless {
+    BackgroundColor LightYellow
+    FontColor Black
+  }
+}
+</style>
+
+* 빨간 배경: Stateful / 노란 배경: Stateless
+** HomePage <<stateful>>
+*** Scaffold <<stateful>>
+**** AppBar <<stateless>>
+**** ListView <<stateless>>
+***** AlarmCard <<stateful>>
+****** GestureDetector <<stateless>>
+******* Container <<stateless>>
+******** Row <<stateless>>
+********* Padding <<stateless>>
+********** Column <<stateless>>
+*********** Text 시간 <<stateless>>
+*********** Text 요일 <<stateless>>
+********* Padding <<stateless>>
+********** Column <<stateless>>
+*********** Switch <<stateful>>
+*********** IconButton 삭제 <<stateless>>
+**** FloatingActionButton <<stateless>>
+** NewAlarmPage / ModifyAlarmPage <<stateful>>
+*** Scaffold <<stateful>>
+**** AppBar <<stateless>>
+**** Column <<stateless>>
+***** GestureDetector 시간선택 <<stateless>>
+****** Row <<stateless>>
+******* Text AM/PM <<stateless>>
+******* Text HH:MM <<stateless>>
+***** Row 요일선택 <<stateless>>
+****** GestureDetector ×7 일~토 <<stateless>>
+***** Row 알림음 <<stateless>>
+****** DropdownButton 무음/알람음1/2 <<stateful>>
+***** Row 다시울림 <<stateless>>
+****** DropdownButton 사용안함/5분3회.. <<stateful>>
+***** Row 알람끄기미션 <<stateless>>
+****** DropdownButton 사용안함/바코드/수학 <<stateful>>
+***** Row 취소/저장 <<stateless>>
+****** ElevatedButton 취소 <<stateless>>
+****** ElevatedButton 저장 <<stateless>>
+** SnoozeAndTurnOffAlarmPage <<stateful>>
+*** Scaffold <<stateful>>
+**** Column <<stateless>>
+***** Row AM/PM HH:MM <<stateless>>
+***** DropdownButton 미션선택 <<stateful>>
+***** Row 알람미루기/끄기 <<stateless>>
+****** ElevatedButton 알람미루기 <<stateless>>
+****** ElevatedButton 알람끄기 <<stateless>>
+** TurnOffAlarmPage <<stateful>>
+*** Scaffold <<stateful>>
+**** Column <<stateless>>
+***** Row AM/PM HH:MM <<stateless>>
+***** DropdownButton 미션선택 <<stateful>>
+***** ElevatedButton 알람끄기 <<stateless>>
+** SnoozeAndTurnOffAlarmPageWithoutMission <<stateful>>
+*** Scaffold <<stateful>>
+**** Column <<stateless>>
+***** Row AM/PM HH:MM <<stateless>>
+***** Row 알람미루기/끄기 <<stateless>>
+****** ElevatedButton 알람미루기 <<stateless>>
+****** ElevatedButton 알람끄기 <<stateless>>
+** TurnOffAlarmPageWithoutMission <<stateful>>
+*** Scaffold <<stateful>>
+**** Column <<stateless>>
+***** Row AM/PM HH:MM <<stateless>>
+***** ElevatedButton 알람끄기 <<stateless>>
+** SolveArithmeticMissionPage <<stateful>>
+*** Scaffold <<stateful>>
+**** Column <<stateless>>
+***** Text 문제 n1-n2 <<stateless>>
+***** Text = 답 <<stateless>>
+***** Row 7 8 9 <<stateless>>
+****** ElevatedButton ×3 <<stateless>>
+***** Row 4 5 6 <<stateless>>
+****** ElevatedButton ×3 <<stateless>>
+***** Row 1 2 3 <<stateless>>
+****** ElevatedButton ×3 <<stateless>>
+***** Row +/- 0 Enter <<stateless>>
+****** ElevatedButton ×3 <<stateless>>
+
+@endwbs
